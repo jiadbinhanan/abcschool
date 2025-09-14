@@ -1,0 +1,249 @@
+/* styles/Dashboard.module.css */
+
+.dashboardLayout {
+  --primary-dark: #3D52A0;
+  --primary-medium: #7091E6;
+  --primary-light: #8697C4;
+  --secondary-light: #ADBBDA;
+  --background-color: #EDE8F5;
+  --text-color-dark: #2c3e50;
+  --text-color-light: #ffffff;
+
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--background-color) 0%, var(--secondary-light) 100%);
+}
+
+.mainContent {
+  flex-grow: 1;
+  overflow-y: auto;
+  transition: filter 0.4s ease-in-out;
+}
+
+.mainContent.blurred {
+  filter: blur(5px) brightness(0.9);
+}
+
+/* --- New Header Styles --- */
+.header {
+  padding: 20px 40px;
+}
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.headerTitle h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: var(--primary-dark);
+}
+
+.welcomeMessage {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  font-size: 1.1rem;
+  color: var(--text-color-dark);
+  margin: 0 40px;
+}
+
+/* --- Sidebar Styles --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 100;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Find and update .sidebarHeader */
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 40px;
+}
+.sidebarHeader h2 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: 1.8rem;
+}
+
+/* Add this new style for the close button */
+.closeButton {
+  background: transparent;
+  border: none;
+  color: var(--primary-dark);
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+.closeButton:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.sidebarNav ul { list-style-type: none; padding: 0; margin: 0; }
+.sidebarNav li { opacity: 0; transform: translateX(-30px); }
+.sidebar.open .sidebarNav li { animation: slideAndFadeIn 0.5s ease-out forwards; }
+.sidebar.open .sidebarNav li:nth-child(1) { animation-delay: 0.1s; }
+.sidebar.open .sidebarNav li:nth-child(2) { animation-delay: 0.2s; }
+.sidebar.open .sidebarNav li:nth-child(3) { animation-delay: 0.3s; }
+.sidebar.open .sidebarNav li:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideAndFadeIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.sidebarNav li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  color: var(--primary-dark);
+  text-decoration: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+.sidebarNav li a:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateX(5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.sidebarNav li a.active {
+  background-color: var(--primary-dark);
+  color: var(--text-color-light);
+  font-weight: bold;
+}
+
+.logoutButton {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--primary-dark);
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+.logoutButton:hover {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* --- Hamburger Menu Style --- */
+.hamburgerMenu {
+  background: var(--primary-dark);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+.hamburgerMenu:hover { transform: scale(1.1); }
+.loading { display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 1.5rem; color: var(--primary-dark); }
+/* Add these new styles at the end of styles/Dashboard.module.css */
+
+.card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.cardTitle {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--primary-dark);
+}
+
+.classList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.classItem {
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid var(--secondary-light);
+  border-radius: 8px;
+  background-color: #fff;
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.classItem:hover {
+  background-color: var(--secondary-light);
+  color: var(--primary-dark);
+}
+
+.classItem.active {
+  background-color: var(--primary-dark);
+  color: var(--text-color-light);
+  border-color: var(--primary-dark);
+}
+
+.studentTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.studentTable th, .studentTable td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.studentTable th {
+  background-color: #f7f9fc;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.studentTable tbody tr:hover {
+  background-color: #f7f9fc;
+}

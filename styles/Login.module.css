@@ -1,0 +1,266 @@
+/* styles/Login.module.css */
+
+.loginContainer {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+/* This is the dark overlay */
+.loginContainer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.glassCard {
+  position: relative; /* To make sure it stays above the overlay */
+  z-index: 1;
+  /* ... All other existing glassCard styles remain the same ... */
+  width: 90%;
+  max-width: 420px;
+  /* etc. */
+}
+
+/* Ensure all other styles like .title, .inputField are below this */
+/* styles/Login.module.css */
+.loginContainer {
+  position: relative; /* For overlay positioning */
+  z-index: 1; /* Ensure card is above background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw; /* Full viewport width */
+  min-height: 100vh; /* Minimum viewport height */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in width/height */
+}
+
+.glassCard {
+  width: 90%;
+  max-width: 420px; /* Slightly wider for better look */
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.1); /* Lighter glass effect */
+  backdrop-filter: blur(20px); /* Stronger blur for liquid glass */
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.2); /* More prominent shadow */
+  text-align: center;
+  color: #ffffff; /* White text for contrast */
+  position: relative;
+  overflow: hidden; /* Hide overflowing animations */
+  animation: slideUp 0.8s ease-out forwards; /* Slide up animation for card */
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+  position: relative;
+  display: inline-block; /* For typewriter effect */
+  white-space: nowrap; /* Prevent line breaks */
+  overflow: hidden;
+  animation: typing 2s steps(15, end) forwards; /* Typewriter animation */
+  border-right: 3px solid #ffffff; /* Cursor effect */
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* Remove cursor after typing animation finishes */
+.title[data-finished="true"] {
+  border-right: none;
+}
+
+
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.8;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.inputGroup {
+  position: relative;
+  animation: slideInLeft 0.8s ease-out forwards; /* Default animation */
+}
+
+.inputGroup:nth-child(2) {
+  animation: slideInRight 0.8s ease-out forwards; /* Second input (password) slides from right */
+  animation-delay: 0.2s; /* Slight delay */
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.inputField {
+  width: 100%;
+  padding: 15px 15px 15px 50px; /* Space for icon */
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.inputField:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.inputField::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Icon styling */
+.icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+}
+
+
+.loginButton {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  background: #ffffff; /* White button */
+  color: #3f2b96; /* Dark purple text */
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  animation: fadeIn 0.8s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+.loginButton:hover {
+  transform: translateY(-3px); /* Slight lift effect */
+  background-color: #f0f0f0;
+  color: #2b1f6d;
+}
+
+.loginButton:disabled {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #888;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .glassCard {
+    padding: 30px 20px;
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  .inputField {
+    padding: 12px 12px 12px 45px;
+  }
+  .icon {
+    font-size: 1rem;
+    left: 12px;
+  }
+}
+/* Add these new styles at the end of styles/Login.module.css */
+
+.mainLoginWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.adminLinkCard {
+  margin-top: 25px;
+  padding: 15px 25px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  text-align: center;
+  font-size: 0.95rem;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 0.6s; /* Appear after the main card */
+  opacity: 0; /* Start hidden */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.adminLinkCard p {
+  margin: 0;
+}
+
+.adminLinkCard a span {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
