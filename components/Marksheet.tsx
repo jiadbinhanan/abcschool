@@ -71,13 +71,12 @@ export default function Marksheet({ student, onClose }: MarksheetProps) {
     doc.setDrawColor('#AAAAAA');
     doc.setLineWidth(0.2);
     doc.line(margin, currentY, pageWidth - margin, currentY);
-    currentY += 10; // কার্ড এবং লাইনের মধ্যেকার দূরত্ব
+    currentY += 10;
     
     // --- Main Container Card Start ---
     const mainCardStartY = currentY;
 
-    // নতুন লাইন: কার্ডের ভেতরে প্যাডিং যোগ করার জন্য
-    currentY += 5; // <<-- এই মানটি পরিবর্তন করে লেখাকে নিচে নামান
+    currentY += 5;
     
     // --- Title inside Main Card ---
     doc.setFontSize(16);
@@ -189,9 +188,7 @@ export default function Marksheet({ student, onClose }: MarksheetProps) {
     doc.setLineWidth(0.5);
     doc.line(margin, signatureY, margin + 50, signatureY);
     doc.text("Institution's Seal", margin + 5, signatureY + 5);
-    doc.line(pageWidth / 2 - 25, signatureY, pageWidth / 2 + 25, signatureY);
     doc.text("Headmaster's Signature", pageWidth / 2, signatureY + 5, { align: 'center' });
-    doc.line(pageWidth - margin - 50, signatureY, pageWidth - margin, signatureY);
     doc.text("Guardian's Signature", pageWidth - margin - 25, signatureY + 5, { align: 'center' });
     
     doc.save(`${student.student_name}_report_card.pdf`);
@@ -266,9 +263,10 @@ export default function Marksheet({ student, onClose }: MarksheetProps) {
                     <div className={styles.summaryItem}><span>Remarks</span><strong>{remarks}</strong></div>
                 </div>
                 <div className={styles.signaturesBlock}>
-                    <div className={styles.signature}>Institution's Seal</div>
-                    <div className={styles.signature}>Headmaster's Signature</div>
-                    <div className={styles.signature}>Guardian's Signature</div>
+                    {/* Change is here */}
+                    <div className={styles.signature}>Institution&apos;s Seal</div>
+                    <div className={styles.signature}>Headmaster&apos;s Signature</div>
+                    <div className={styles.signature}>Guardian&apos;s Signature</div>
                 </div>
             </div>
         </div>

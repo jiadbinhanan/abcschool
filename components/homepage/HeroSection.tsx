@@ -1,5 +1,6 @@
 // components/homepage/HeroSection.tsx
 import Link from 'next/link';
+import Image from 'next/image'; // 1. Image কম্পোনেন্ট ইম্পোর্ট করুন
 import styles from './HeroSection.module.css';
 import { FiArrowRight } from 'react-icons/fi';
 import { FaSchool, FaUserGraduate, FaCalendarAlt } from 'react-icons/fa';
@@ -25,53 +26,56 @@ export default function HeroSection() {
         </div>
       </div>
       
-{/* --- Decorated Cards (Updated with Hover Effect) --- */}
-<div className={styles.cardGrid}>
-  {/* Card 1: Our Campus */}
-  <div className={styles.card}>
-    <div className={styles.cardContent}>
-      <FaSchool className={styles.cardIcon} />
-      <h3 className={styles.cardTitle}>Our Campus</h3>
-      <p className={styles.cardText}>State-of-the-art facilities and a nurturing environment.</p>
-      <a href="https://drive.google.com/drive/folders/1BRWKxkyEMn2BeBcLTVSYbkeN26zztvZT" target="_blank" rel="noopener noreferrer" className={styles.viewMore}>
-        Click here to view more
-      </a>
-    </div>
-    <div className={styles.imagePopup}>
-      <img src="/cards/campus.jpg" alt="Our Campus" />
-    </div>
-  </div>
+      {/* --- Decorated Cards (Updated with Hover Effect) --- */}
+      <div className={styles.cardGrid}>
+        {/* Card 1: Our Campus */}
+        <div className={styles.card}>
+          <div className={styles.cardContent}>
+            <FaSchool className={styles.cardIcon} />
+            <h3 className={styles.cardTitle}>Our Campus</h3>
+            <p className={styles.cardText}>State-of-the-art facilities and a nurturing environment.</p>
+            <a href="https://drive.google.com/drive/folders/1BRWKxkyEMn2BeBcLTVSYbkeN26zztvZT" target="_blank" rel="noopener noreferrer" className={styles.viewMore}>
+              Click here to view more
+            </a>
+          </div>
+          <div className={styles.imagePopup}>
+            {/* 2. <img> ট্যাগটিকে <Image /> দিয়ে পরিবর্তন করা হয়েছে */}
+            <Image src="/cards/campus.jpg" alt="Our Campus" layout="fill" objectFit="cover" />
+          </div>
+        </div>
 
-  {/* Card 2: Bright Students */}
-  <div className={styles.card}>
-    <div className={styles.cardContent}>
-      <FaUserGraduate className={styles.cardIcon} />
-      <h3 className={styles.cardTitle}>Bright Students</h3>
-      <p className={styles.cardText}>Fostering talent and encouraging curiosity in every child.</p>
-      <a href="#" target="_blank" rel="noopener noreferrer" className={styles.viewMore}>
-        Click here to view more
-      </a>
-    </div>
-    <div className={styles.imagePopup}>
-      <img src="/cards/students.jpg" alt="Bright Students" />
-    </div>
-  </div>
+        {/* Card 2: Bright Students */}
+        <div className={styles.card}>
+          <div className={styles.cardContent}>
+            <FaUserGraduate className={styles.cardIcon} />
+            <h3 className={styles.cardTitle}>Bright Students</h3>
+            <p className={styles.cardText}>Fostering talent and encouraging curiosity in every child.</p>
+            <a href="#" target="_blank" rel="noopener noreferrer" className={styles.viewMore}>
+              Click here to view more
+            </a>
+          </div>
+          <div className={styles.imagePopup}>
+            {/* 2. <img> ট্যাগটিকে <Image /> দিয়ে পরিবর্তন করা হয়েছে */}
+            <Image src="/cards/students.jpg" alt="Bright Students" layout="fill" objectFit="cover" />
+          </div>
+        </div>
 
-  {/* Card 3: Events & Culture */}
-  <div className={styles.card}>
-    <div className={styles.cardContent}>
-      <FaCalendarAlt className={styles.cardIcon} />
-      <h3 className={styles.cardTitle}>Events & Culture</h3>
-      <p className={styles.cardText}>A vibrant campus life with diverse cultural and sports events.</p>
-      <a href="#" target="_blank" rel="noopener noreferrer" className={styles.viewMore}>
-        Click here to view more
-      </a>
-    </div>
-    <div className={styles.imagePopup}>
-      <img src="/cards/events.jpg" alt="Events & Culture" />
-    </div>
-  </div>
-</div>
-      </section>
+        {/* Card 3: Events & Culture */}
+        <div className={styles.card}>
+          <div className={styles.cardContent}>
+            <FaCalendarAlt className={styles.cardIcon} />
+            <h3 className={styles.cardTitle}>Events & Culture</h3>
+            <p className={styles.cardText}>A vibrant campus life with diverse cultural and sports events.</p>
+            <a href="#" target="_blank" rel="noopener noreferrer" className={styles.viewMore}>
+              Click here to view more
+            </a>
+          </div>
+          <div className={styles.imagePopup}>
+            {/* 2. <img> ট্যাগটিকে <Image /> দিয়ে পরিবর্তন করা হয়েছে */}
+            <Image src="/cards/events.jpg" alt="Events & Culture" layout="fill" objectFit="cover" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

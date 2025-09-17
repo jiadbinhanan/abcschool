@@ -1,21 +1,20 @@
 /* components/homepage/HeroSection.module.css */
 .heroSection {
   position: relative;
-  z-index: 2; /* This line will bring the section to the top layer */
-  /* ... other styles */
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4rem 1.5rem; /* Padding adjusted for content spacing */
+  padding: 4rem 1.5rem;
   width: 100%;
   background-image: url('/school-banner.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;
   text-align: center;
-  margin-top: -20vh; /* This pulls the section UP, merging with the slider */
-  border-radius: 40px 40px 0 0; /* Adds a nice curve at the top */
+  margin-top: -20vh;
+  border-radius: 40px 40px 0 0;
   box-shadow: 0 -10px 20px rgba(0,0,0,0.2);
 }
 
@@ -25,7 +24,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(10, 25, 47, 0.2); /* Dark overlay for text readability */
+  background-color: rgba(10, 25, 47, 0.2);
   z-index: 1;
 }
 
@@ -91,7 +90,7 @@
   color: #3D52A0;
   transform: translateY(-3px);
 }
-/* --- Updated Decorated Cards Styles --- */
+
 .cardGrid {
   position: relative;
   z-index: 2;
@@ -100,7 +99,7 @@
   gap: 1.5rem;
   width: 100%;
   max-width: 1000px;
-  margin-top: -80px; /* Pull the cards up slightly over the hero section */
+  margin-top: -80px;
 }
 
 .card {
@@ -110,8 +109,8 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   transition: transform 0.3s ease;
-  position: relative; /* Needed for the popup */
-  overflow: hidden; /* Hides the popup initially */
+  position: relative;
+  overflow: hidden;
 }
 
 .cardContent {
@@ -124,7 +123,7 @@
 }
 
 .card:hover .cardContent {
-  opacity: 0; /* Hide content on hover to show image */
+  opacity: 0;
 }
 
 .cardIcon {
@@ -152,26 +151,21 @@
   text-decoration: underline;
 }
 
-/* --- The Slide-up Image Popup --- */
 .imagePopup {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  transform: translateY(100%); /* Initially hidden at the bottom */
+  transform: translateY(100%);
   transition: transform 0.4s ease;
 }
 
 .card:hover .imagePopup {
-  transform: translateY(0); /* Slide up on hover */
+  transform: translateY(0);
 }
 
-.imagePopup img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+/* The .imagePopup img selector is removed as it's no longer needed */
 
 /* Mobile Friendly */
 @media (max-width: 992px) {

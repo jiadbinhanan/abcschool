@@ -23,7 +23,8 @@ export default function Footer() {
               <li><Link href="/admission">Admission</Link></li>
               <li><Link href="/syllabus">Syllabus & Routine</Link></li>
               <li><Link href="/results">Results</Link></li>
-              <li><Link href="/teachers">Teachers' List</Link></li>
+              {/* Change has been made on the next line as requested */}
+              <li><Link href="/teachers">Teachers&apos; List</Link></li>
             </ul>
           </div>
           

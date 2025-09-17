@@ -47,7 +47,7 @@ export default function Header() {
             <li><Link href="/login" className={styles.loginButton}><FiLogIn /> Teacher Login</Link></li>
             <li><Link href="/admin/login" className={styles.loginButton}><FiLogIn /> Admin Login</Link></li>
          </ul>
-         <p className={styles.navFooter}>"Education for a Bright Future"</p>
+<p className={styles.navFooter}>&quot;Education for a Bright Future&quot;</p>  
       </nav>
     </>
   );

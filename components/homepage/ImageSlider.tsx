@@ -1,4 +1,5 @@
 // components/homepage/ImageSlider.tsx
+import Image from 'next/image'; // 1. Image কম্পোনেন্ট ইম্পোর্ট করুন
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
@@ -29,7 +30,15 @@ export default function ImageSlider() {
       >
         {images.map((src, index) => (
           <SwiperSlide key={index}>
-            <img src={src} alt={`School Image ${index + 1}`} className={styles.slideImage} />
+            {/* 2. <img> ট্যাগের পরিবর্তে <Image /> কম্পোনেন্ট ব্যবহার করুন */}
+            <Image
+              src={src}
+              alt={`School Image ${index + 1}`}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className={styles.slideImage}
+              priority={index === 0} // প্রথম ছবিটি দ্রুত লোড করার জন্য
+            />
           </SwiperSlide>
         ))}
       </Swiper>
