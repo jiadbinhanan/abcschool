@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient.js';
 import { useRouter } from 'next/router';
 import styles from '../../styles/AdminDashboard.module.css';
-import { FiUsers, FiClipboard, FiPlusSquare, FiLogOut } from 'react-icons/fi';
+import { FiUsers, FiClipboard, FiPlusSquare, FiLogOut, FiCheckSquare, FiEye } from 'react-icons/fi';
 import Link from 'next/link';
+import type { User } from '@supabase/supabase-js';
 
 export default function AdminDashboard() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function AdminDashboard() {
         .select('role')
         .eq('user_id', session.user.id)
         .single();
+      
       if (roleData?.role !== 'admin') {
         await supabase.auth.signOut();
         router.push('/admin');
@@ -50,28 +52,30 @@ export default function AdminDashboard() {
         </header>
 
         <main className={styles.navGrid}>
-          {/* Card 1: Manage Students */}
-          <Link href="/admin/manage-students" className={styles.navCard}>
+          {/* The link is now corrected to point to the unified manage students page */}
+          <Link href="/manage-students" className={styles.navCard}>
             <div className={styles.cardIcon}><FiUsers /></div>
             <h2 className={styles.cardTitle}>Manage Students</h2>
           </Link>
-
-          {/* Card 2: Manage Teachers */}
-          <Link href="#" className={styles.navCard}>
+          <Link href="/admin/manage-teachers" className={styles.navCard}>
             <div className={styles.cardIcon}><FiUsers /></div>
             <h2 className={styles.cardTitle}>Manage Teachers</h2>
           </Link>
-
-          {/* Card 3: Manage Classes & Sections */}
           <Link href="/admin/manage-classes" className={styles.navCard}>
             <div className={styles.cardIcon}><FiClipboard /></div>
             <h2 className={styles.cardTitle}>Manage Classes</h2>
           </Link>
-
-          {/* Card 4: Manage Subjects */}
-          <Link href="#" className={styles.navCard}>
+          <Link href="/admin/manage-subjects" className={styles.navCard}>
             <div className={styles.cardIcon}><FiPlusSquare /></div>
             <h2 className={styles.cardTitle}>Manage Subjects</h2>
+          </Link>
+          <Link href="/admin/publish-results" className={styles.navCard}>
+            <div className={styles.cardIcon}><FiCheckSquare /></div>
+            <h2 className={styles.cardTitle}>Publish Results</h2>
+          </Link>
+          <Link href="/view-results" className={styles.navCard}>
+            <div className={styles.cardIcon}><FiEye /></div>
+            <h2 className={styles.cardTitle}>View Results</h2>
           </Link>
         </main>
         

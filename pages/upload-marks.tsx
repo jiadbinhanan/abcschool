@@ -5,6 +5,12 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Dashboard.module.css';
 import uploadStyles from '../styles/UploadMarks.module.css';
 import type { User } from '@supabase/supabase-js';
+import { FiLock } from 'react-icons/fi';
+
+// Imports for file generation and styling
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable'; // <-- পরিবর্তিত (Changed)
+import * as XLSX from 'xlsx';
 
 // Define types for our data
 type Class = { id: number; name: string; };
@@ -30,6 +36,7 @@ export default function UploadMarks() {
   const [fullMarks, setFullMarks] = useState('100');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [isLocked, setIsLocked] = useState(false);
 
   const router = useRouter();
 
@@ -79,6 +86,30 @@ export default function UploadMarks() {
     }
   }, [selectedSection]);
 
+  useEffect(() => {
+    const fetchLockAndMarks = async () => {
+      if (selectedClass && selectedSection && selectedExam && selectedSubject) {
+        const { data: lockData } = await supabase.from('exam_locks').select('is_locked').eq('class_id', selectedClass).eq('section_id', selectedSection).eq('exam_id', selectedExam).single();
+        setIsLocked(lockData ? lockData.is_locked : false);
+        if (!lockData) {
+            const { data: marksData } = await supabase.from('results').select('student_id, marks_obtained, full_marks').eq('exam_id', selectedExam).eq('subject_id', selectedSubject);
+            if (marksData && marksData.length > 0) {
+                const marksMap = marksData.reduce((acc, mark) => {
+                    acc[mark.student_id] = mark.marks_obtained.toString();
+                    return acc;
+                }, {});
+                setMarks(marksMap);
+                setFullMarks(marksData[0].full_marks.toString());
+            } else {
+                setMarks({});
+            }
+        }
+      }
+    };
+    fetchLockAndMarks();
+  }, [selectedClass, selectedSection, selectedExam, selectedSubject]);
+
+
   const handleMarkChange = (studentId: number, value: string) => {
     setMarks(prev => ({ ...prev, [studentId]: value }));
   };
@@ -95,7 +126,7 @@ export default function UploadMarks() {
       student_id: student.id,
       subject_id: selectedSubject,
       exam_id: selectedExam,
-      marks_obtained: marks[student.id] || 0,
+      marks_obtained: Number(marks[student.id]) || 0,
       full_marks: parseInt(fullMarks, 10) || 100,
       entered_by: user.id,
     }));
@@ -109,6 +140,62 @@ export default function UploadMarks() {
       setMessage('Marks saved successfully!');
     }
     setLoading(false);
+  };
+  
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    
+    const className = classes.find(c => c.id == Number(selectedClass))?.name || 'N/A';
+    const sectionName = sections.find(s => s.id == Number(selectedSection))?.name || 'N/A';
+    const examName = exams.find(e => e.id == Number(selectedExam))?.name || 'N/A';
+    const subjectName = subjects.find(s => s.id == Number(selectedSubject))?.name || 'N/A';
+
+    doc.setFontSize(18);
+    doc.text("A B C Academy", doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+    doc.setFontSize(14);
+    doc.text("Students Marks List", doc.internal.pageSize.getWidth() / 2, 30, { align: 'center' });
+    doc.setFontSize(12);
+    doc.text(examName, doc.internal.pageSize.getWidth() / 2, 40, { align: 'center' });
+    doc.line(20, 45, doc.internal.pageSize.getWidth() - 20, 45);
+    doc.setFontSize(10);
+    doc.text(`Class: ${className}`, 20, 55);
+    doc.text(`Section: ${sectionName}`, 70, 55);
+    doc.text(`Subject: ${subjectName}`, 120, 55);
+
+    const tableColumn = ["SL No.", "Roll No.", "Student Name", "Total Marks", "Obtained Marks"];
+    const tableRows = students.map((student, index) => [
+        index + 1,
+        student.roll_number,
+        student.name,
+        fullMarks,
+        marks[student.id] || '0'
+    ]);
+
+    autoTable(doc, { // <-- পরিবর্তিত (Changed)
+        head: [tableColumn],
+        body: tableRows,
+        startY: 65,
+    });
+
+    doc.save(`marks_${className}_${subjectName}.pdf`);
+  };
+
+  const handleDownloadExcel = () => {
+    const dataForExcel = students.map((student, index) => ({
+      'SL No.': index + 1,
+      'Roll No.': student.roll_number,
+      'Student Name': student.name,
+      'Total Marks': parseInt(fullMarks, 10),
+      'Obtained Marks': parseInt(marks[student.id] || '0', 10)
+    }));
+    
+    const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "MarksList");
+    
+    const className = classes.find(c => c.id == Number(selectedClass))?.name || 'Class';
+    const subjectName = subjects.find(s => s.id == Number(selectedSubject))?.name || 'Subject';
+    XLSX.writeFile(workbook, `marks_${className}_${subjectName}.xlsx`);
   };
 
   if (!user) return <div className={styles.loading}>Loading...</div>;
@@ -141,6 +228,12 @@ export default function UploadMarks() {
         </div>
 
         {selectedSection && selectedExam && selectedSubject && students.length > 0 && (
+          isLocked ? (
+            <div className={uploadStyles.lockedMessage}>
+              <FiLock />
+              <p>Results for this examination have been published and are now locked. No further edits are allowed.</p>
+            </div>
+          ) : (
             <div className={uploadStyles.marksCard}>
                 <div className={uploadStyles.cardHeader}>
                     <h2>Enter Marks for {subjects.find(s => s.id == Number(selectedSubject))?.name}</h2>
@@ -180,11 +273,20 @@ export default function UploadMarks() {
                         ))}
                     </tbody>
                 </table>
-                <button onClick={handleSaveMarks} disabled={loading} className={uploadStyles.saveButton}>
-                    {loading ? 'Saving...' : 'Save Marks'}
-                </button>
+                <div className={uploadStyles.cardActions}>
+                  <button onClick={handleSaveMarks} disabled={loading} className={uploadStyles.saveButton}>
+                      {loading ? 'Saving...' : 'Save Marks'}
+                  </button>
+                  <button onClick={handleDownloadPDF} className={uploadStyles.downloadButton}>
+                    Download PDF
+                  </button>
+                  <button onClick={handleDownloadExcel} className={uploadStyles.downloadButton}>
+                    Download Excel
+                  </button>
+                </div>
                 {message && <p className={uploadStyles.message}>{message}</p>}
             </div>
+          )
         )}
       </main>
     </div>

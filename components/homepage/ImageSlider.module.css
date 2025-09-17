@@ -1,0 +1,12 @@
+/* components/homepage/ImageSlider.module.css */
+.sliderContainer {
+  width: 100%;
+  height: 60vh; /* Adjust height as needed */
+  padding-top: 80px; /* Space for the fixed header */
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}

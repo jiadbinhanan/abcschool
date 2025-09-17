@@ -1,0 +1,138 @@
+/* components/layout/Header.module.css */
+.header {
+  padding: 1rem 1.5rem;
+  position: fixed; /* Changed to fixed for better mobile experience */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 2rem;
+}
+
+.schoolName {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a2c4e;
+}
+
+.address {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #3e4a63;
+}
+
+.hamburgerButton {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #1a2c4e;
+  cursor: pointer;
+  z-index: 1001; /* Ensure it's on top */
+}
+
+/* --- Glass Navigation Menu Styles --- */
+.navMenu {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start off-screen */
+  width: 300px; /* Width of the menu */
+  height: 100%;
+  
+  /* Glass Effect */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  
+  z-index: 1002;
+  transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth slide effect */
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.navMenuOpen {
+  right: 0; /* Slide in */
+}
+
+.navHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1a2c4e;
+  margin-bottom: 2rem;
+}
+.navHeader h2 {
+  margin: 0;
+}
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.navLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navLinks li {
+  margin-bottom: 0.5rem;
+}
+
+.navLinks a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1a2c4e;
+  border-radius: 10px;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: rgba(255, 255, 255, 0.2); /* Sub-card effect */
+}
+
+.navLinks a:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+}
+
+.loginButton {
+  background-color: #3D52A0 !important;
+  color: white !important;
+}
+
+.navFooter {
+  margin-top: auto;
+  text-align: center;
+  font-style: italic;
+  color: #3e4a63;
+}

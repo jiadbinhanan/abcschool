@@ -1,0 +1,61 @@
+/* styles/Results.module.css */
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.cardHeader h2 {
+    margin: 0;
+}
+.exportButtons {
+    display: flex;
+    gap: 15px;
+}
+.exportButtons button {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    color: #3D52A0;
+    background-color: transparent;
+    border: 1px solid #3D52A0;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+.exportButtons button:hover {
+    background-color: #3D52A0;
+    color: white;
+}
+
+.resultsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.resultsTable th, .resultsTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #EAE0C8;
+}
+.resultsTable th {
+    background-color: #f9f6ef;
+}
+.actionCell {
+    text-align: center;
+}
+.actionCell button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #777;
+    transition: color 0.2s;
+}
+.actionCell button:hover {
+    color: #3D52A0;
+}

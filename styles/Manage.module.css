@@ -190,3 +190,96 @@
     grid-template-columns: 1fr;
   }
 }
+/* Add these styles to styles/Manage.module.css */
+.statusBox {
+  text-align: center;
+  padding: 20px;
+}
+
+.statusBox p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.statusBox strong {
+  color: #e74c3c;
+}
+
+.actionButton {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #3D52A0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+/* Add these styles to styles/Manage.module.css */
+.permissionControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: #f9f6ef;
+  padding: 20px;
+  border-radius: 10px;
+}
+.permissionControl p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px 5px 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #555;
+  transition: background-color 0.3s ease;
+}
+.toggleButton.toggledOn {
+  background-color: #4CAF50; /* Green when on */
+  color: white;
+  padding: 5px 5px 5px 15px;
+}
+/* Add these styles for the card header with export buttons */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.cardHeader h2 {
+    margin: 0;
+}
+.exportButtons {
+  display: flex;
+  gap: 10px;
+}
+.exportButtons button {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+.exportButtons button:hover {
+  background-color: #e0e0e0;
+}

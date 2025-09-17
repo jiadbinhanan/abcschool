@@ -1,0 +1,135 @@
+/* components/homepage/Highlights.module.css */
+.highlightsSection {
+  padding: 5rem 1.5rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* Notice board is narrower */
+  gap: 3rem;
+}
+
+.columnTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a2c4e;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.columnTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: #3D52A0;
+}
+
+/* Notice Board Styles */
+.noticeList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.noticeItem {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.noticeItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.noticeDate {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background-color: #f0f4ff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #3D52A0;
+  font-weight: 700;
+  line-height: 1;
+}
+.noticeDate span {
+  font-size: 1.8rem;
+}
+
+.noticeContent p {
+  margin: 0;
+}
+.noticeTitle {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+.readMore {
+  font-size: 0.85rem;
+  color: #3D52A0;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Events Grid Styles */
+.eventGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.eventCard {
+  position: relative;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.eventCard:hover {
+  transform: scale(1.03);
+}
+
+.eventOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+.eventTitle {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+/* --- Mobile Friendly --- */
+@media (max-width: 992px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}

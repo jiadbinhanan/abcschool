@@ -20,8 +20,6 @@
   color: #3D52A0;
 }
 
-/* Add these new styles to styles/UploadMarks.module.css */
-
 .cardHeader {
   display: flex;
   justify-content: space-between;
@@ -118,7 +116,7 @@
 }
 
 .saveButton {
-  margin-top: 30px;
+  /* margin-top: 30px; <-- MODIFIED: This is removed */
   padding: 15px 30px;
   font-size: 1.1rem;
   font-weight: bold;
@@ -132,4 +130,42 @@
 .message {
   margin-top: 20px;
   font-weight: 500;
+}
+.lockedMessage {
+  text-align: center;
+  padding: 40px;
+  background-color: #ffebee;
+  border: 1px solid #e57373;
+  border-radius: 12px;
+  color: #c62828;
+}
+.lockedMessage svg {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+/* --- ADDED STYLES FOR BUTTONS --- */
+
+.cardActions {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap; /* Helps on smaller screens */
+  align-items: center;
+  gap: 15px; /* Provides space between the buttons */
+}
+
+.downloadButton {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745; /* Green color for download/export */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.downloadButton:hover {
+  background-color: #218838; /* A darker green for hover effect */
 }
