@@ -136,3 +136,26 @@
   font-style: italic;
   color: #3e4a63;
 }
+/* === অ্যানিমেশনের জন্য নতুন কোড === */
+
+/* ১. স্লাইড-ডাউন অ্যানিমেশন তৈরি */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ২. মেনু খুললে প্রতিটি li আইটেমে অ্যানিমেশন প্রয়োগ */
+.navMenuOpen .navLinks li {
+  /* শুরুতে অদৃশ্য থাকবে এবং অ্যানিমেশনের জন্য প্রস্তুত হবে */
+  opacity: 0; 
+  animation: slideDown 0.4s ease-out forwards;
+  
+  /* ৩. Javascript থেকে আসা --delay ভ্যারিয়েবল ব্যবহার করে ডিলে সেট করা */
+  animation-delay: calc(var(--delay) * 0.07s);
+}

@@ -1,4 +1,13 @@
-/* styles/globals.css */
+/* Glitch সমাধানের জন্য Wrapper ক্লাস */
+.page-wrapper {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   padding: 0;
@@ -6,9 +15,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   
-  /* --- Beautiful Light Gradient Background --- */
+  /* সুন্দর গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড */
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  background-attachment: fixed; /* Makes the gradient stay in place on scroll */
+  background-attachment: fixed;
 }
 
 a {

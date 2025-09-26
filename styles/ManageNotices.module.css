@@ -1,0 +1,105 @@
+/* styles/ManageNotices.module.css */
+.formTitle {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #3d3d3d;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.cancelButton {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #777;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+  background-color: #f1f1f1;
+  border-color: #aaa;
+}
+
+.noticeListContainer {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+  border: 1px solid #EAE0C8;
+}
+
+.noticeListContainer h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.noticeList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.noticeListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #EAE0C8;
+}
+
+.noticeListItem:last-child {
+  border-bottom: none;
+}
+
+.noticeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.noticeInfo strong {
+  font-size: 1.1rem;
+}
+
+.noticeInfo span {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.editButton, .deleteButton {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+.editButton {
+  background-color: #1e90ff; /* Dodger Blue */
+  color: white;
+}
+
+.deleteButton {
+  background-color: #ff4757; /* Tomato Red */
+  color: white;
+}
+
+.editButton:hover, .deleteButton:hover {
+  opacity: 0.8;
+}

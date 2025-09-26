@@ -13,7 +13,7 @@
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.0);
 }
 
 .glassCard {
@@ -48,7 +48,7 @@
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.2); /* More prominent shadow */
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.0); /* More prominent shadow */
   text-align: center;
   color: #ffffff; /* White text for contrast */
   position: relative;

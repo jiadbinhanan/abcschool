@@ -61,6 +61,7 @@
 .navCard:nth-child(4) { animation-delay: 0.4s; }
 .navCard:nth-child(5) { animation-delay: 0.5s; }
 .navCard:nth-child(6) { animation-delay: 0.6s; } /* Animation for the 6th card */
+.navCard:nth-child(7) { animation-delay: 0.7s; } /* নতুন ৭ম কার্ডের জন্য অ্যানিমেশন */
 
 @keyframes slideInUp {
   from {
@@ -118,4 +119,84 @@
   height: 100vh;
   font-size: 1.5rem;
   color: var(--primary-color);
+}
+/* --- FORM STYLES FOR MANAGE NOTICES --- */
+.formContainer {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+  border: 1px solid var(--border-color);
+}
+
+.formGroup {
+  margin-bottom: 25px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Georgia', serif;
+  background-color: var(--bg-color);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
+}
+
+.submitButton {
+  display: block;
+  width: 100%;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: var(--gold-accent);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #c8931a; /* Darker gold */
+  transform: translateY(-2px);
+}
+
+.submitButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.formMessage {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #e3f2fd;
+  color: #1e88e5;
+}
+
+.backLinkContainer {
+  text-align: center;
+  margin-top: 40px;
 }

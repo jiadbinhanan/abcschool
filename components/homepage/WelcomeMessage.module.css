@@ -1,12 +1,19 @@
-/* components/homepage/WelcomeMessage.module.css */
 .welcomeSection {
   padding: 5rem 1.5rem;
-  background-color: #f7f9fc; /* Light background to separate from hero */
+  background-color: #f7f9fc;
 }
 
 .container {
   max-width: 900px;
   margin: 0 auto;
+}
+
+.headmasterCardWrapper {
+  margin-bottom: 3rem;
+}
+
+.historyCardWrapper {
+  /* This wrapper doesn't need specific styles */
 }
 
 .headmasterCard {
@@ -16,16 +23,20 @@
   background-color: #ffffff;
   padding: 2.5rem;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
   margin-bottom: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  
+  /* অ্যানিমেশন পারফরম্যান্সের জন্য যোগ করা হয়েছে */
+  opacity: 0.99; 
+  will-change: transform, opacity;
 }
 
 .imageContainer {
-  flex-shrink: 0; /* Prevents the image from shrinking */
+  flex-shrink: 0;
 }
 
 .headmasterImage {
-  border-radius: 50%; /* Makes the image circular */
+  border-radius: 50%;
   object-fit: cover;
   border: 5px solid #3D52A0;
 }
@@ -55,6 +66,11 @@
   padding: 2rem;
   background-color: #ffffff;
   border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+
+  /* অ্যানিমেশন পারফরম্যান্সের জন্য যোগ করা হয়েছে */
+  opacity: 0.99;
+  will-change: transform, opacity;
 }
 
 .historyTitle {
@@ -71,7 +87,6 @@
   margin: 0 auto;
 }
 
-/* --- Mobile Friendly --- */
 @media (max-width: 768px) {
   .headmasterCard {
     flex-direction: column;

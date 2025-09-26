@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import styles from './Testimonials.module.css';
 import { FaQuoteLeft } from 'react-icons/fa';
+import { motion, Variants } from 'framer-motion'; // ১. Framer Motion ইম্পোর্ট করুন
 
 // Dummy data for testimonials
 const testimonials = [
@@ -23,36 +24,66 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  
+  // ২. অ্যানিমেশনের জন্য ভ্যারিয়েন্ট
+  const textReveal: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.1, duration: 0.8 } }
+  };
+
+  const sliderReveal: Variants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } }
+  };
+
   return (
     <section className={styles.testimonialsSection}>
       <div className={styles.container}>
-        <h2 className={styles.title}>What People Say</h2>
-        
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={30}
-          slidesPerView={1}
-          loop={true}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          pagination={{ clickable: true }}
-          className={styles.swiper}
+        <motion.h2
+          className={styles.title}
+          variants={textReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.5 }}
         >
-          {testimonials.map((item, index) => (
-            <SwiperSlide key={index} className={styles.slide}>
-              <FaQuoteLeft className={styles.quoteIcon} />
-              <p className={styles.quoteText}>{item.quote}</p>
-              <p className={styles.authorText}>{item.author}</p>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          What People Say
+        </motion.h2>
         
-        <div className={styles.finalQuote}>
+        <motion.div
+          variants={sliderReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        >
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={30}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            pagination={{ clickable: true }}
+            className={styles.swiper}
+          >
+            {testimonials.map((item, index) => (
+              <SwiperSlide key={index} className={styles.slide}>
+                <FaQuoteLeft className={styles.quoteIcon} />
+                <p className={styles.quoteText}>{item.quote}</p>
+                <p className={styles.authorText}>{item.author}</p>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
+        
+        <motion.div
+          className={styles.finalQuote}
+          variants={textReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.8 }}
+        >
           <p>“Education is the most powerful weapon which you can use to change the world.”</p>
           <span>— Nelson Mandela</span>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,79 +1,109 @@
 /* components/homepage/QuickLinks.module.css */
+
 .quickLinksSection {
-  padding: 5rem 1.5rem;
-  background-color: #f7f9fc;
+  padding: 4rem 1.5rem;
+  background-color: #f8f9fa; /* হালকা ধূসর ব্যাকগ্রাউন্ড */
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.sectionTitle {
   text-align: center;
-}
-
-.title {
   font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a2c4e;
   margin-bottom: 3rem;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 0.5rem;
+  color: #343a40;
 }
 
-.title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
-  background-color: #3D52A0;
-}
-
-.linksGrid {
+.quickLinksGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
 .linkCard {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 2rem;
   background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-  text-align: left;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* ভেতরের কন্টেন্ট বাইরে যেতে বাধা দেবে */
+  transition: box-shadow 0.3s ease;
 }
 
 .linkCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 35px rgba(61, 82, 160, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  cursor: pointer;
 }
 
 .cardIcon {
-  font-size: 3rem;
-  color: #3D52A0;
-  background-color: #eef2f9;
-  padding: 1rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 2rem;
+  color: #3D52A0; /* আপনার ব্র্যান্ডের প্রাইমারি রঙ */
+  margin-right: 1rem;
 }
 
 .cardTitle {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  color: #1a2c4e;
-  margin: 0 0 0.25rem 0;
+  margin: 0;
+  color: #343a40;
+  flex-grow: 1; /* عنوانকে সম্পূর্ণ জায়গা নিতে সাহায্য করে */
 }
 
-.cardSubtitle {
-  font-size: 0.9rem;
+.chevronIcon {
+  font-size: 1.5rem;
+  color: #888;
+  transition: transform 0.4s ease;
+}
+
+.chevronIcon.rotated {
+  transform: rotate(180deg);
+}
+
+/* স্লাইড হয়ে বের হওয়া কন্টেন্টের স্টাইল */
+.cardContent {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease;
+  padding: 0 1.5rem;
   color: #555;
+  border-top: 1px solid transparent;
+}
+
+.cardContent.expanded {
+  max-height: 400px; /* আপনার কন্টেন্টের উচ্চতা অনুযায়ী পরিবর্তন করুন */
+  opacity: 1;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.contentInner p {
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+.contentInner p:last-child {
+  margin-bottom: 0;
+}
+
+/* শিক্ষকদের তালিকার জন্য বিশেষ স্টাইল */
+.teacherList {
+  list-style: none;
+  padding: 0;
   margin: 0;
+}
+
+.teacherList li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.teacherList li:last-child {
+  border-bottom: none;
 }

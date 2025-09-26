@@ -1,21 +1,19 @@
-/* components/homepage/HeroSection.module.css */
 .heroSection {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 4rem 1.5rem;
+  padding: 120px 1.5rem 150px 1.5rem;
   width: 100%;
   background-image: url('/school-banner.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;
   text-align: center;
-  margin-top: -20vh;
-  border-radius: 40px 40px 0 0;
-  box-shadow: 0 -10px 20px rgba(0,0,0,0.2);
+  min-height: 80vh;
+  overflow: hidden;
 }
 
 .overlay {
@@ -32,21 +30,73 @@
   position: relative;
   z-index: 2;
   max-width: 800px;
-  margin-bottom: 4rem;
+  width: 100%;
 }
 
 .heroTitle {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 700;
-  line-height: 1.2;
   margin: 0 0 1rem 0;
+  line-height: 1.3;
+  animation: simpleFadeIn 1.5s ease-in-out infinite alternate;
 }
 
+
+/* --- সাবটাইটেলের জন্য নতুন Shimmer/Shine ইফেক্ট --- */
 .heroSubtitle {
-  font-size: 1.2rem;
-  font-weight: 300;
-  opacity: 0.9;
-  margin-bottom: 2.5rem;
+  font-size: 1.5rem; /* সাইজ সামান্য বাড়ানো হলো ইফেক্টটি ভালোভাবে দেখানোর জন্য */
+  font-weight: 500;
+  margin-bottom: 2rem;
+  
+  /* ১. গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড তৈরি করা হয়েছে */
+  background: linear-gradient(
+    90deg,
+    #b0c4de 0%,    /* হালকা নীল সাদা */
+    #ffffff 50%,   /* মাঝখানে উজ্জ্বল সাদা (আলোর রেখা) */
+    #b0c4de 100%   /* আবার হালকা নীল সাদা */
+  );
+  
+  /* ২. ব্যাকগ্রাউন্ডের সাইজ বড় করা হয়েছে অ্যানিমেশনের জন্য */
+  background-size: 200% auto;
+  
+  /* ৩. ব্যাকগ্রাউন্ডটিকে টেক্সটের আকারে কেটে নেওয়া হয়েছে */
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+  /* ৪. টেক্সটের মূল রঙটি স্বচ্ছ করা হয়েছে */
+  -webkit-text-fill-color: transparent;
+  
+  /* ৫. Shine অ্যানিমেশন যোগ করা হয়েছে */
+  animation: shine 4s linear infinite;
+}
+
+.canvasContainer {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto;
+  position: relative;
+  padding-top: 56.25%;
+  background: rgba(0,0,0,0.2);
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sliderCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.sliderCanvas :global(.swiper) {
+  width: 100%;
+  height: 100%;
+}
+.sliderCanvas :global(.swiper-slide) {
+  position: relative;
 }
 
 .ctaButtons {
@@ -67,39 +117,59 @@
   align-items: center;
   gap: 0.5rem;
   border: 2px solid transparent;
+  z-index: 3;
+  cursor: pointer;
 }
 
 .ctaButtonPrimary {
   background-color: #3D52A0;
   color: #fff;
 }
-
 .ctaButtonPrimary:hover {
   background-color: #31417e;
   transform: translateY(-3px);
 }
-
 .ctaButtonSecondary {
   background-color: transparent;
   color: #fff;
   border-color: #fff;
 }
-
 .ctaButtonSecondary:hover {
   background-color: #fff;
   color: #3D52A0;
   transform: translateY(-3px);
 }
 
+.whatsappButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.whatsappButton:hover {
+    background-color: #128C7E;
+    transform: scale(1.05);
+}
+
 .cardGrid {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   width: 100%;
   max-width: 1000px;
-  margin-top: -80px;
 }
 
 .card {
@@ -112,45 +182,37 @@
   position: relative;
   overflow: hidden;
 }
-
 .cardContent {
   padding: 2rem;
   transition: opacity 0.4s ease;
 }
-
 .card:hover {
   transform: translateY(-10px);
 }
-
 .card:hover .cardContent {
   opacity: 0;
 }
-
 .cardIcon {
   font-size: 3rem;
   color: #fff;
   margin-bottom: 1rem;
 }
-
 .cardTitle {
   font-size: 1.5rem;
   margin: 0 0 0.5rem 0;
   color: #fff;
 }
-
 .cardText {
   font-size: 0.9rem;
   opacity: 0.8;
   line-height: 1.5;
   margin-bottom: 1rem;
 }
-
 .viewMore {
   color: #fff;
   font-weight: bold;
   text-decoration: underline;
 }
-
 .imagePopup {
   position: absolute;
   bottom: 0;
@@ -160,18 +222,50 @@
   transform: translateY(100%);
   transition: transform 0.4s ease;
 }
-
 .card:hover .imagePopup {
   transform: translateY(0);
 }
 
-/* The .imagePopup img selector is removed as it's no longer needed */
-
-/* Mobile Friendly */
 @media (max-width: 992px) {
   .cardGrid {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
     grid-template-columns: 1fr;
     max-width: 400px;
-    margin-top: 2rem;
+    margin: 3rem auto 0 auto;
+  }
+  .heroSection {
+    padding-bottom: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+}
+
+@keyframes simpleFadeIn {
+  from {
+    opacity: 0.7;
+    /* লেখাটি ৯০% ছোট অবস্থা থেকে শুরু হবে */
+    transform: scale(0.9); 
+  }
+  to {
+    opacity: 1;
+    /* লেখাটি ১০০% স্বাভাবিক আকারে আসবে */
+    transform: scale(1);
+  }
+}
+/* ফাইলের শেষে যোগ করুন */
+@keyframes shine {
+  to {
+    /* ব্যাকগ্রাউন্ড পজিশন -200% এ যাবে, যা আলোকে বাম থেকে ডানে নিয়ে যাবে */
+    background-position: -200% center;
   }
 }

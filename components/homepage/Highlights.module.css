@@ -1,93 +1,111 @@
-/* components/homepage/Highlights.module.css */
-.highlightsSection {
-  padding: 5rem 1.5rem;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1.5fr; /* Notice board is narrower */
-  gap: 3rem;
-}
-
-.columnTitle {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a2c4e;
-  margin-bottom: 2rem;
-  position: relative;
-  padding-bottom: 0.5rem;
-}
-
-.columnTitle::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 3px;
-  background-color: #3D52A0;
-}
-
-/* Notice Board Styles */
-.noticeList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.noticeItem {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  background-color: #fff;
-  padding: 1rem;
+/* === নোটিশ বোর্ডের ফ্রেম এবং কর্ক === */
+.noticeBoardFrame {
+  background-color: #6f4e37; /* Wood color */
+  border: 15px solid #6f4e37;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.noticeItem:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0,0,0,0.5);
 }
 
-.noticeDate {
-  flex-shrink: 0;
-  width: 60px;
-  height: 60px;
-  background-color: #f0f4ff;
-  border-radius: 8px;
+.noticeBoardCork {
+  background-color: #d2b48c; /* Tan color */
+  /* একটি真实的软木板纹理 */
+  background-image: url('https://www.transparenttextures.com/patterns/pinstripe.png');
+  padding: 20px;
+  height: 500px; /* বোর্ডের উচ্চতা নির্দিষ্ট করে দিন */
+  overflow-y: auto; /* আসল স্ক্রলিং এখানে হবে */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #3D52A0;
-  font-weight: 700;
-  line-height: 1;
-}
-.noticeDate span {
-  font-size: 1.8rem;
+  gap: 20px;
 }
 
-.noticeContent p {
-  margin: 0;
+/* === প্রতিটি নোটিশ (কাগজের মতো) === */
+.noticePaper {
+  background-color: #fffff0; /* Ivory paper color */
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  transition: transform 0.2s ease;
+}
+/* একটু এলোমেলো ভাব আনার জন্য */
+.noticePaper:nth-child(odd) {
+  transform: rotate(-1.5deg);
+}
+.noticePaper:nth-child(even) {
+  transform: rotate(1deg);
+}
+.noticePaper:hover {
+  transform: rotate(0) scale(1.02);
+  z-index: 10;
+}
+
+/* === পিন ডিজাইন === */
+.pin {
+  width: 15px;
+  height: 15px;
+  background-color: #ff4757; /* Red pin head */
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+/* আগের নোটিশের স্টাইলগুলো এখানে অ্যাডজাস্ট করা হয়েছে */
+.noticeHeader {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.noticeContent {
+  flex-grow: 1;
+  margin-left: 15px;
 }
 .noticeTitle {
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.25rem;
-}
-.readMore {
-  font-size: 0.85rem;
-  color: #3D52A0;
+  margin: 0;
   font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  color: #333;
 }
 
-/* Events Grid Styles */
+/* বিস্তারিত অংশের স্টাইল */
+.noticeDetails {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, margin-top 0.4s ease-out;
+  margin-top: 0;
+}
+.noticeDetails.expanded {
+  max-height: 200px;
+  margin-top: 15px;
+}
+.noNotices {
+  color: #fff;
+  background-color: rgba(0,0,0,0.3);
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* === কাস্টম স্ক্রলবার ডিজাইন (Webkit browsers like Chrome, Safari) === */
+.noticeBoardCork::-webkit-scrollbar {
+  width: 10px;
+}
+.noticeBoardCork::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.noticeBoardCork::-webkit-scrollbar-thumb {
+  background: #6f4e37;
+  border-radius: 10px;
+  border: 2px solid #d2b48c;
+}
+.noticeBoardCork::-webkit-scrollbar-thumb:hover {
+  background: #5a3f2d;
+}
+/* --- Events Grid Styles (আগের মতোই) --- */
 .eventGrid {
   display: grid;
   grid-template-columns: 1fr;
@@ -127,7 +145,7 @@
   font-size: 1.3rem;
 }
 
-/* --- Mobile Friendly --- */
+/* --- Mobile Friendly (আগের মতোই) --- */
 @media (max-width: 992px) {
   .container {
     grid-template-columns: 1fr;
