@@ -20,3 +20,15 @@ externalPort = 80
 
 [agent]
 expertMode = true
+
+[nix]
+channel = "stable-23_05"
+
+[nix.packages]
+chromium = ""
+
+[nix]
+channel = "stable-23_05"
+
+[nix.packages]
+chromium = ""
