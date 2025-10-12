@@ -1,7 +1,7 @@
 // pages/admin/manage-teachers.tsx
 import { useEffect, useState, FormEvent } from 'react';
 import { supabase } from '../../lib/supabaseClient.js';
-import manageStyles from '../../styles/ManageStudents.module.css';
+import manageStyles from '../../styles/Manage.module.css';
 import { FiUserPlus, FiTrash2 } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 

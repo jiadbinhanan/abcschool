@@ -78,10 +78,8 @@
   margin-top: 0;
 }
 .noticeDetails.expanded {
-  max-height: 1000px; /* <-- এখানে একটি অনেক বড় মান দিন */
-  opacity: 1;
-  padding: 20px 20px;
-  border-top: 1px solid #f0f0f0;
+  max-height: 200px;
+  margin-top: 15px;
 }
 .noNotices {
   color: #fff;
@@ -152,22 +150,4 @@
   .container {
     grid-template-columns: 1fr;
   }
-}
-.downloadButton {
-  margin-top: 15px;
-  padding: 8px 15px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  background-color: #6f4e37;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.3s;
-}
-.downloadButton:hover {
-  background-color: #5a3f2d;
 }

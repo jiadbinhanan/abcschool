@@ -3,6 +3,9 @@ entrypoint = "index.js"
 hidden = [".config", "package-lock.json", ".next", ".swc"]
 modules = ["nodejs-22"]
 
+[nix]
+channel = "stable-24_11"
+
 [env]
 NEXT_TELEMETRY_DISABLED = "1"
 
@@ -17,7 +20,3 @@ externalPort = 80
 
 [agent]
 expertMode = true
-
-[nix]
-channel = "stable-24_11" # আপনার ফাইলের নতুন ভার্সনটিই রাখা হলো
-packages = ["chromium"]

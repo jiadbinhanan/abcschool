@@ -8,12 +8,6 @@
   --background-color: #EDE8F5;
   --text-color-dark: #2c3e50;
   --text-color-light: #ffffff;
-  --danger-color: #c62828;
-  --danger-background: #ffebee;
-  --glass-bg-light: rgba(255, 255, 255, 0.4);
-  --glass-bg-medium: rgba(255, 255, 255, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-shadow: rgba(61, 82, 160, 0.1);
 
   display: flex;
   width: 100vw;
@@ -27,60 +21,148 @@
   flex-grow: 1;
   overflow-y: auto;
   transition: filter 0.4s ease-in-out;
-  padding-left: 0;
 }
 
 .mainContent.blurred {
   filter: blur(5px) brightness(0.9);
 }
 
-/* --- Header Area --- */
-.dashboardHeaderArea {
-  padding: 20px 40px 0 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* গ্যাপ কমানো হয়েছে */
+/* --- New Header Styles --- */
+.header {
+  padding: 20px 40px;
 }
-
-.topBar {
+.headerTitle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 20px;
+}
+.headerTitle h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: var(--primary-dark);
 }
 
-/* --- A B C Academy Card --- */
-.academyCard {
-  background: var(--glass-bg-light);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px 0 var(--glass-shadow);
-  padding: 15px 25px;
+.welcomeMessage {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  font-size: 1.1rem;
+  color: var(--text-color-dark);
+  margin: 0 40px;
+}
+
+/* --- Sidebar Styles --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 100;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Find and update .sidebarHeader */
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 40px;
+}
+.sidebarHeader h2 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: 1.8rem;
+}
+
+/* Add this new style for the close button */
+.closeButton {
+  background: transparent;
+  border: none;
+  color: var(--primary-dark);
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+.closeButton:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.sidebarNav ul { list-style-type: none; padding: 0; margin: 0; }
+.sidebarNav li { opacity: 0; transform: translateX(-30px); }
+.sidebar.open .sidebarNav li { animation: slideAndFadeIn 0.5s ease-out forwards; }
+.sidebar.open .sidebarNav li:nth-child(1) { animation-delay: 0.1s; }
+.sidebar.open .sidebarNav li:nth-child(2) { animation-delay: 0.2s; }
+.sidebar.open .sidebarNav li:nth-child(3) { animation-delay: 0.3s; }
+.sidebar.open .sidebarNav li:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideAndFadeIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.sidebarNav li a {
   display: flex;
   align-items: center;
   gap: 15px;
-  transform: translateX(100%);
-  animation: slideInFromRight 0.8s ease-out forwards;
-  animation-delay: 0.5s;
-}
-
-@keyframes slideInFromRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-.academyCard img {
-  height: 40px;
-  width: auto;
-  border-radius: 8px;
-}
-
-.academyCard h2 {
-  margin: 0;
-  font-size: 1.5rem;
+  padding: 15px;
   color: var(--primary-dark);
-  white-space: nowrap;
+  text-decoration: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+.sidebarNav li a:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateX(5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.sidebarNav li a.active {
+  background-color: var(--primary-dark);
+  color: var(--text-color-light);
+  font-weight: bold;
+}
+
+.logoutButton {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--primary-dark);
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+.logoutButton:hover {
+  background-color: #ffebee;
+  color: #c62828;
 }
 
 /* --- Hamburger Menu Style --- */
@@ -97,139 +179,71 @@
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: transform 0.3s, background-color 0.3s;
-  z-index: 10;
+  transition: transform 0.3s;
 }
-.hamburgerMenu:hover {
-  transform: scale(1.1);
-  background: var(--primary-medium);
-}
-
-/* --- Updated Welcome Message Styles (No Card) --- */
-.welcomeMessageContainer {
-  position: relative;
-  overflow: hidden; /* অ্যানিমেশনের জন্য জরুরি */
-  padding: 20px 0; /* উপরে নিচে প্যাডিং */
-  margin: 10px 0;
-}
-
-.welcomeText {
-  font-size: 1.4rem; /* ফন্ট সাইজ বাড়ানো হয়েছে */
-  font-weight: 700; /* বোল্ড করা হয়েছে */
-  color: var(--primary-dark);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  position: relative;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeIn 1s ease-out forwards;
-  animation-delay: 1.8s; /* স্মোক এফেক্টের পর আসবে */
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.smokeEffect {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
-  animation: smokeReveal 1.5s ease-in-out forwards;
-  animation-delay: 0.8s; /* স্লাইড-ইন এর পর শুরু হবে */
-  transform: translateX(-100%);
-  z-index: 1;
-}
-
-@keyframes smokeReveal {
-  0% { transform: translateX(-100%); opacity: 1; }
-  50% { transform: translateX(0); }
-  100% { transform: translateX(100%); opacity: 0; }
-}
-
-/* --- New Page Title Style --- */
-.pageTitle {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary-dark);
-  margin: 0 0 20px 0;
-  padding: 0;
-}
-
-
-/* --- Sidebar Styles (No changes) --- */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 280px;
-  background: var(--glass-bg-medium);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border-right: 1px solid var(--glass-border);
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-  transform: translateX(-100%);
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  z-index: 100;
-}
-.sidebar.open { transform: translateX(0); }
-.sidebarHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-.sidebarHeader h2 { margin: 0; color: var(--primary-dark); font-size: 1.8rem; }
-.closeButton { background: transparent; border: none; color: var(--primary-dark); font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 5px; border-radius: 50%; transition: background-color 0.2s, color 0.2s; }
-.closeButton:hover { background-color: rgba(0,0,0,0.1); }
-.sidebarNav ul { list-style-type: none; padding: 0; margin: 0; }
-.sidebarNav li { opacity: 0; transform: translateX(-30px); }
-.sidebar.open .sidebarNav li { animation: slideAndFadeIn 0.5s ease-out forwards; }
-.sidebar.open .sidebarNav li:nth-child(1) { animation-delay: 0.1s; }
-.sidebar.open .sidebarNav li:nth-child(2) { animation-delay: 0.2s; }
-.sidebar.open .sidebarNav li:nth-child(3) { animation-delay: 0.3s; }
-.sidebar.open .sidebarNav li:nth-child(4) { animation-delay: 0.4s; }
-@keyframes slideAndFadeIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-.sidebarNav li a { display: flex; align-items: center; gap: 15px; padding: 15px; color: var(--primary-dark); text-decoration: none; border-radius: 10px; margin-bottom: 10px; font-weight: 500; background-color: rgba(255, 255, 255, 0.5); transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; }
-.sidebarNav li a:hover { background-color: rgba(255, 255, 255, 1); transform: translateX(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-.sidebarNav li a.active { background-color: var(--primary-dark); color: var(--text-color-light); font-weight: bold; }
-.logoutButton { margin-top: auto; display: flex; align-items: center; gap: 15px; padding: 15px; font-size: 1rem; font-weight: 500; color: var(--primary-dark); background-color: rgba(255, 255, 255, 0.4); border: none; border-radius: 10px; cursor: pointer; width: 100%; text-align: left; transition: all 0.3s ease; }
-.logoutButton:hover { background-color: var(--danger-background); color: var(--danger-color); }
+.hamburgerMenu:hover { transform: scale(1.1); }
 .loading { display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 1.5rem; color: var(--primary-dark); }
+/* Add these new styles at the end of styles/Dashboard.module.css */
 
-/* --- Common Glass Card Style --- */
-.glassCard {
-  background: var(--glass-bg-light);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px 0 var(--glass-shadow);
-  padding: 30px;
+.card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
-.cardTitle { margin-top: 0; margin-bottom: 25px; color: var(--primary-dark); font-size: 1.5rem; border-bottom: 1px solid rgba(61, 82, 160, 0.2); padding-bottom: 15px; }
 
-/* --- Selectors (Academic Year, Class, Section) --- */
-.selectorCard {
-  margin: 0 40px 20px 40px;
+.cardTitle {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--primary-dark);
 }
-.formGroup { margin-bottom: 20px; }
-.formGroup label { display: block; font-size: 1.2rem; color: var(--primary-dark); margin-bottom: 10px; font-weight: 600; }
-.selectDropdown { width: 100%; padding: 12px; font-size: 1rem; border-radius: 8px; border: 1px solid rgba(61, 82, 160, 0.2); background-color: rgba(255, 255, 255, 0.6); color: var(--primary-dark); font-weight: 500; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233D52A0'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px top 50%; background-size: 20px auto; transition: all 0.3s ease; }
-.selectDropdown:focus { outline: none; border-color: var(--primary-medium); box-shadow: 0 0 0 3px rgba(112, 145, 230, 0.3); }
-.classList { display: flex; flex-wrap: wrap; gap: 15px; }
-.classItem { padding: 12px 25px; font-size: 1rem; font-weight: 500; border: 1px solid transparent; border-radius: 10px; background: rgba(255, 255, 255, 0.5); color: var(--primary-dark); cursor: pointer; transition: all 0.3s ease; }
-.classItem:hover { background: rgba(255, 255, 255, 0.8); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-.classItem.active { background: var(--primary-dark); color: var(--text-color-light); border-color: var(--primary-dark); box-shadow: 0 4px 15px rgba(61, 82, 160, 0.3); }
 
-/* --- Student Table & Export Buttons (No changes) --- */
-.studentTable { width: 100%; border-collapse: collapse; border-spacing: 0; }
-.studentTable th, .studentTable td { padding: 18px 15px; text-align: left; border-bottom: 1px solid rgba(61, 82, 160, 0.1); }
-.studentTable th { font-weight: 600; color: var(--primary-dark); background-color: rgba(255, 255, 255, 0.5); }
-.studentTable tbody tr { transition: background-color 0.2s; }
-.studentTable tbody tr:hover { background-color: rgba(255, 255, 255, 0.7); }
-.studentTable tbody tr:last-child td { border-bottom: none; }
-.listHeader { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
-.exportButtons { display: flex; gap: 10px; }
-.exportButton { display: flex; align-items: center; gap: 8px; padding: 10px 15px; font-size: 0.9rem; font-weight: 500; border: none; border-radius: 8px; background-color: var(--primary-dark); color: var(--text-color-light); cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(61, 82, 160, 0.2); }
-.exportButton:hover { background-color: var(--primary-medium); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(61, 82, 160, 0.3); }
+.classList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.classItem {
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid var(--secondary-light);
+  border-radius: 8px;
+  background-color: #fff;
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.classItem:hover {
+  background-color: var(--secondary-light);
+  color: var(--primary-dark);
+}
+
+.classItem.active {
+  background-color: var(--primary-dark);
+  color: var(--text-color-light);
+  border-color: var(--primary-dark);
+}
+
+.studentTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.studentTable th, .studentTable td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.studentTable th {
+  background-color: #f7f9fc;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.studentTable tbody tr:hover {
+  background-color: #f7f9fc;
+}
