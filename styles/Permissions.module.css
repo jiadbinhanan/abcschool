@@ -1,0 +1,103 @@
+/* styles/Permissions.module.css */
+.permissionContainer {
+  max-width: 800px; /* কার্ডের সর্বোচ্চ চওড়া */
+  margin: 0 auto 20px auto; /* উপরে-নিচে মার্জিন এবং ডানে-বামে অটো (মাঝামাঝি আনার জন্য) */
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #e0e0e0;
+}
+
+.permissionHeader {
+  font-size: 1.5rem; /* সামান্য ছোট করা হলো */
+  color: #3d3d3d;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.permissionSubheader {
+  text-align: center;
+  color: #777;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.teacherRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.teacherName {
+  font-weight: 500;
+  color: #3d3d3d;
+}
+
+.permissionAction {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.statusEnabled {
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.statusDisabled {
+  color: #c62828;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+/* --- Toggle Switch CSS --- */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px; /* সামান্য ছোট করা হলো */
+  height: 28px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #28a745;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #28a745;
+}
+input:checked + .slider:before {
+  transform: translateX(22px);
+}

@@ -1,3 +1,20 @@
+/* styles/globals.css */
+
+/* --- Root Variables --- */
+:root {
+  /* আপনার আগের ডিফল্ট ফন্টটি এখন ভেরিয়েবল হিসেবে ব্যবহার করা হচ্ছে */
+  --primary-font: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --heading-font: sans-serif; 
+  
+  /* বাকি ভেরিয়েবলগুলো একই থাকছে */
+  --primary-accent: #4a90e2;
+  --soft-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  --text-dark: #333;
+  --text-light: #667;
+  --border-radius: 12px;
+}
+
 /* Glitch সমাধানের জন্য Wrapper ক্লাস */
 .page-wrapper {
   overflow-x: hidden;
@@ -12,10 +29,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--primary-font); /* ভেরিয়েবল থেকে ডিফল্ট ফন্ট সেট করা হলো */
   
-  /* সুন্দর গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড */
+  /* আপনার পছন্দের গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড */
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   background-attachment: fixed;
 }

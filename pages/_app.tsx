@@ -1,14 +1,23 @@
-// pages/_app.tsx
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { useInactivityLogout } from '../lib/hooks/useInactivityLogout'; // ১. হুকটি import করুন
+import 'regenerator-runtime/runtime';
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import { useInactivityLogout } from '../lib/hooks/useInactivityLogout';
+import { Toaster } from 'react-hot-toast';
+import { useRoleTheme } from '../lib/hooks/useRoleTheme'; // ১. আপনার role theme হুকটি ইম্পোর্ট করা হলো
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // ২. হুকটিকে এখানে কল করুন
-  // এটি আপনার সম্পূর্ণ অ্যাপে ইনঅ্যাকটিভিটি টাইমারটি চালু করে দেবে
+  // ইনঅ্যাকটিভিটি হুক
   useInactivityLogout();
+  
+  // ২. role অনুযায়ী থিম সেট করার জন্য হুকটি এখানে কল করা হলো
+  useRoleTheme();
 
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Component {...pageProps} />
+      <Toaster position="bottom-center" />
+    </>
+  );
 }
 
 export default MyApp;

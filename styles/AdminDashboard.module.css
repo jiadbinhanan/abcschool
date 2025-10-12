@@ -1,202 +1,310 @@
-/* styles/AdminDashboard.module.css (Final with Animations) */
-.dashboardLayout {
-  --bg-color: #F8F4E3;
-  --primary-color: #3d3d3d;
-  --gold-accent: #DAA520;
-  --card-bg: #FFFFFF;
-  --border-color: #EAE0C8;
+/* styles/AdminDashboard.module.css (সংশোধিত) */
 
-  width: 100vw;
+/* --- ✅ পরিবর্তন: :root এর পরিবর্তে .theme ক্লাস --- */
+.theme {
+  --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --heading-font: 'Georgia', serif; 
+  --primary-accent: #4a90e2;
+  --soft-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  --text-dark: #3d3d3d;
+  --text-light: #777;
+  --border-radius: 12px;
+}
+
+/* --- Page Layout --- */
+.pageWrapper {
+  display: flex;
   min-height: 100vh;
-  background-color: var(--bg-color);
-  font-family: 'Georgia', serif;
-  padding: 40px;
+  width: 100%;
+  background: linear-gradient(135deg, #e0f7fa 0%, #fff9c4 50%, #fce4ec 100%);
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 3rem;
-  font-weight: normal;
-  color: var(--primary-color);
-}
-
-.header p {
-  font-size: 1.1rem;
-  color: #777;
-  margin-top: 10px;
-}
-
-.navGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.navCard {
-  background-color: var(--card-bg);
-  border-radius: 15px;
-  padding: 25px;
-  text-align: center;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-  border: 1px solid var(--border-color);
-  text-decoration: none;
-  color: var(--primary-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0; /* Initially hidden for the animation */
-  animation: slideInUp 0.5s ease-out forwards; /* Apply animation to all cards */
-}
-
-/* --- THIS IS THE NEW ANIMATION SECTION --- */
-/* Staggered slide-in animation for each card */
-.navCard:nth-child(1) { animation-delay: 0.1s; }
-.navCard:nth-child(2) { animation-delay: 0.2s; }
-.navCard:nth-child(3) { animation-delay: 0.3s; }
-.navCard:nth-child(4) { animation-delay: 0.4s; }
-.navCard:nth-child(5) { animation-delay: 0.5s; }
-.navCard:nth-child(6) { animation-delay: 0.6s; } /* Animation for the 6th card */
-.navCard:nth-child(7) { animation-delay: 0.7s; } /* নতুন ৭ম কার্ডের জন্য অ্যানিমেশন */
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.navCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.cardIcon {
-  font-size: 2.5rem;
-  color: var(--gold-accent);
-  margin-bottom: 15px;
-}
-
-.cardTitle {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-.logoutButtonContainer {
-  text-align: center;
-  margin-top: 50px;
-}
-
-.logoutButton {
-  padding: 12px 30px;
-  font-size: 1rem;
-  color: var(--gold-accent);
-  background-color: transparent;
-  border: 1px solid var(--gold-accent);
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.logoutButton:hover {
-  background-color: var(--gold-accent);
-  color: white;
-}
-
+/* --- Loading Screen --- */
 .loading {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   font-size: 1.5rem;
-  color: var(--primary-color);
-}
-/* --- FORM STYLES FOR MANAGE NOTICES --- */
-.formContainer {
-  max-width: 700px;
-  margin: 50px auto;
-  padding: 40px;
-  background-color: var(--card-bg);
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-  border: 1px solid var(--border-color);
+  font-family: var(--heading-font);
+  color: var(--text-dark);
+  background: linear-gradient(135deg, #e0f7fa 0%, #fff9c4 50%, #fce4ec 100%);
 }
 
-.formGroup {
+/* --- Sidebar --- */
+.sidebar {
+  width: 280px;
+  background-color: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-right: 1px solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 1001;
+}
+
+.sidebarTopControls {
+    height: 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.sidebarCloseButton {
+  display: none;
+  background: rgba(0,0,0,0.05);
+  border-radius: 50%;
+  border: none;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: var(--text-dark);
+}
+.sidebarHeaderCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  padding: 0 5px;
+}
+
+.logo { border-radius: 8px; }
+.schoolName {
+  font-family: var(--heading-font);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.sidebarNav {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebarLinkCard {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  color: #3b506c;
+  font-weight: 600;
+  font-family: var(--primary-font);
+}
+.sidebarLinkCard:hover {
+  background: white;
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  color: var(--primary-accent);
+}
+.sidebarLinkCard svg { font-size: 1.3rem; }
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  border: none;
+  background-color: #fce4ec;
+  color: #c2185b;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+.logoutButton:hover {
+  background-color: #c2185b;
+  color: white;
+  box-shadow: 0 5px 15px #fce4ec;
+}
+
+/* --- Main Content --- */
+.mainContent {
+  flex-grow: 1;
+  padding: 25px;
+  margin-left: 280px;
+}
+
+.contentWrapper {
+    width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
   margin-bottom: 25px;
 }
-
-.formGroup label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  color: var(--primary-color);
-  font-weight: bold;
+.schoolHeaderCard {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--soft-shadow);
+  font-family: var(--heading-font);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
-.formInput,
-.formTextarea {
-  width: 100%;
-  padding: 15px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: 'Georgia', serif;
-  background-color: var(--bg-color);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.formInput:focus,
-.formTextarea:focus {
-  outline: none;
-  border-color: var(--gold-accent);
-  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
-}
-
-.submitButton {
-  display: block;
-  width: 100%;
-  padding: 15px 30px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: white;
-  background-color: var(--gold-accent);
+.hamburger {
+  background: rgba(255,255,255,0.7);
   border: none;
-  border-radius: 25px;
+  font-size: 1.8rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  color: var(--text-dark);
+  padding: 8px;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: none;
+  transition: opacity 0.2s;
 }
 
-.submitButton:hover {
-  background-color: #c8931a; /* Darker gold */
-  transform: translateY(-2px);
+.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
-.submitButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.welcomeText {
+  font-family: var(--heading-font);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 30px;
+}
+.welcomeText span { display: inline-block; }
+
+.sectionTitle {
+  font-family: var(--heading-font);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--text-dark);
 }
 
-.formMessage {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 1rem;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #e3f2fd;
-  color: #1e88e5;
+.overviewGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
-.backLinkContainer {
-  text-align: center;
-  margin-top: 40px;
+.statCard {
+  background-color: var(--card-color);
+  color: white;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 8px 20px -5px var(--card-color);
 }
+.statIcon {
+  font-size: 2.2rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 50%;
+}
+.statInfo { display: flex; flex-direction: column; }
+.statValue { font-size: 1.8rem; font-weight: 700; font-family: var(--heading-font); }
+.statLabel { font-size: 0.9rem; font-family: var(--primary-font); }
+
+.quickActionsSection {
+    width: 100%;
+}
+
+.navGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+.navGrid > div {
+  flex: 1 1 240px;
+  min-width: 240px;
+}
+
+.navCard {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  text-decoration: none;
+  color: var(--text-dark);
+  box-shadow: var(--soft-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  display: block;
+}
+.navCard:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+}
+.cardIcon { font-size: 2.2rem; color: var(--primary-accent); margin-bottom: 15px; }
+.cardTitle { font-family: var(--heading-font); font-size: 1.2rem; margin: 0 0 8px 0; }
+.cardDescription { font-family: var(--primary-font); font-size: 0.9rem; color: var(--text-light); margin: 0; }
+
+/* --- Responsive Design --- */
+@media (min-width: 768px) {
+  .overviewGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .mainContent {
+    margin-left: 0;
+    padding: 20px;
+  }
+  .hamburger, .sidebarCloseButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcomeText { font-size: 2.2rem; }
+  .overviewGrid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+}
+
+.mobileBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+@media (min-width: 1025px) {
+  .mobileBackdrop, .sidebarCloseButton { display: none; }
+}
+
