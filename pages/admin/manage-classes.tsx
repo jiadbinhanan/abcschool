@@ -1,12 +1,15 @@
 // pages/admin/manage-classes.tsx
-import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient.js';
+import { useEffect, useState, FormEvent } from 'react';
+import { supabase } from '../../lib/supabaseClient';
 import { useRouter } from 'next/router';
-import manageStyles from '../../styles/Manage.module.css';
-import { FiPlus, FiTrash2 } from 'react-icons/fi';
+import styles from '../../styles/ManageStudents.module.css';
+import { FiPlus, FiTrash2, FiChevronDown } from 'react-icons/fi';
+import toast from 'react-hot-toast';
+import ConfirmationModal from '../../components/ui/ConfirmationModal';
 
 type Class = { id: number; name: string; };
 type Section = { id: number; name: string; class_id: number; };
+type AcademicYear = { academic_year: string };
 
 export default function ManageClasses() {
   const [classes, setClasses] = useState<Class[]>([]);
@@ -14,125 +17,221 @@ export default function ManageClasses() {
   const [selectedClass, setSelectedClass] = useState<Class | null>(null);
   const [newClassName, setNewClassName] = useState('');
   const [newSectionName, setNewSectionName] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState('');
   const router = useRouter();
+  const [academicYears, setAcademicYears] = useState<AcademicYear[]>([]);
+  const [selectedYear, setSelectedYear] = useState<string>('');
+  
+  // ✅ Modal এবং Undo লজিকের জন্য State
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<{ id: number; type: 'class' | 'section' } | null>(null);
 
-  const fetchClasses = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('classes').select('*').order('name');
-    if (error) setMessage('Error fetching classes');
+  useEffect(() => {
+    const fetchAcademicYears = async () => {
+      const { data: yearData } = await supabase.rpc('get_distinct_academic_years');
+      if (yearData && yearData.length > 0) {
+        setAcademicYears(yearData);
+        setSelectedYear(yearData[0].academic_year);
+      }
+    };
+    fetchAcademicYears();
+  }, []);
+
+  const fetchClasses = async (year: string) => {
+    if (!year) return;
+    const { data, error } = await supabase.from('classes').select('*').eq('academic_year', year).order('name');
+    if (error) toast.error('Error fetching classes');
     else setClasses(data || []);
-    setLoading(false);
   };
 
   useEffect(() => {
-    fetchClasses();
-  }, []);
+    fetchClasses(selectedYear);
+    setSelectedClass(null);
+    setSections([]);
+  }, [selectedYear]);
 
   const handleClassSelect = async (cls: Class) => {
     setSelectedClass(cls);
     const { data, error } = await supabase.from('sections').select('*').eq('class_id', cls.id).order('name');
-    if (error) setMessage('Error fetching sections');
+    if (error) toast.error('Error fetching sections');
     else setSections(data || []);
   };
 
-  const handleAddClass = async (e: React.FormEvent) => {
+  const handleAddClass = async (e: FormEvent) => {
     e.preventDefault();
-    if (!newClassName.trim()) return;
-    const { error } = await supabase.from('classes').insert([{ name: newClassName }]);
-    if (error) setMessage(`Error: ${error.message}`);
+    if (!newClassName.trim() || !selectedYear) return;
+    const { error } = await supabase.from('classes').insert([{ name: newClassName, academic_year: selectedYear }]);
+    if (error) toast.error(`Error: ${error.message}`);
     else {
+      toast.success('Class added successfully!');
       setNewClassName('');
-      fetchClasses();
+      fetchClasses(selectedYear);
     }
   };
 
-  const handleAddSection = async (e: React.FormEvent) => {
+  const handleAddSection = async (e: FormEvent) => {
     e.preventDefault();
-    if (!newSectionName.trim() || !selectedClass) return;
-    const { error } = await supabase.from('sections').insert([{ name: newSectionName, class_id: selectedClass.id }]);
-    if (error) setMessage(`Error: ${error.message}`);
+    if (!newSectionName.trim() || !selectedClass || !selectedYear) return;
+    const { error } = await supabase.from('sections').insert([{ name: newSectionName, class_id: selectedClass.id, academic_year: selectedYear }]);
+    if (error) toast.error(`Error: ${error.message}`);
     else {
+      toast.success('Section added successfully!');
       setNewSectionName('');
       handleClassSelect(selectedClass);
     }
   };
 
-  const handleDeleteSection = async (sectionId: number) => {
-    if (window.confirm('Are you sure you want to delete this section?')) {
-      const { error } = await supabase.from('sections').delete().eq('id', sectionId);
-      if (error) setMessage(`Error: ${error.message}`);
-      else {
-        handleClassSelect(selectedClass!);
+  // ✅ ধাপ ১: Modal খোলার জন্য নতুন ফাংশন
+  const openDeleteModal = (id: number, type: 'class' | 'section') => {
+    setItemToDelete({ id, type });
+    setIsConfirmModalOpen(true);
+  };
+
+  // ✅ ধাপ ২: Modal থেকে Confirm করার পর Undo লজিকসহ ডিলিট ফাংশন
+  const handleConfirmDelete = () => {
+    if (!itemToDelete) return;
+
+    const { id, type } = itemToDelete;
+    
+    // ক্লাস ডিলিট করার লজিক
+    if (type === 'class') {
+      const classToDelete = classes.find(c => c.id === id);
+      if (!classToDelete) return;
+
+      // Optimistic UI update
+      setClasses(prev => prev.filter(c => c.id !== id));
+      if (selectedClass?.id === id) {
+        setSelectedClass(null);
+        setSections([]);
       }
+
+      const timeout = setTimeout(async () => {
+        await supabase.from('classes').delete().eq('id', id);
+        toast.success(`Class "${classToDelete.name}" permanently deleted.`);
+      }, 5000);
+
+      toast.custom((t) => (
+        <div style={{ background: '#333', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <span>Class "{classToDelete.name}" deleted.</span>
+          <button style={{ background: '#555', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '5px' }}
+            onClick={() => {
+              clearTimeout(timeout);
+              setClasses(prev => [...prev, classToDelete].sort((a, b) => a.name.localeCompare(b.name)));
+              toast.success(`Restored "${classToDelete.name}"`, { id: t.id, duration: 3000 });
+            }}>
+            Undo
+          </button>
+        </div>
+      ), { duration: 5000, id: `delete-class-${id}` });
     }
-  };
-  
-  const handleDeleteClass = async (classId: number) => {
-    if (window.confirm('Are you sure you want to delete this class?')) {
-        const { error } = await supabase.from('classes').delete().eq('id', classId);
-        if (error) setMessage(`Error: ${error.message}`);
-        else {
-            setMessage('Class deleted successfully!');
-            fetchClasses();
-            setSelectedClass(null);
-            setSections([]);
-        }
+    
+    // সেকশন ডিলিট করার লজিক
+    if (type === 'section') {
+      const sectionToDelete = sections.find(s => s.id === id);
+      if (!sectionToDelete) return;
+      
+      // Optimistic UI update
+      setSections(prev => prev.filter(s => s.id !== id));
+      
+      const timeout = setTimeout(async () => {
+        await supabase.from('sections').delete().eq('id', id);
+        toast.success(`Section "${sectionToDelete.name}" permanently deleted.`);
+      }, 5000);
+
+      toast.custom((t) => (
+        <div style={{ background: '#333', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <span>Section "{sectionToDelete.name}" deleted.</span>
+          <button style={{ background: '#555', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '5px' }}
+            onClick={() => {
+              clearTimeout(timeout);
+              setSections(prev => [...prev, sectionToDelete].sort((a, b) => a.name.localeCompare(b.name)));
+              toast.success(`Restored "${sectionToDelete.name}"`, { id: t.id, duration: 3000 });
+            }}>
+            Undo
+          </button>
+        </div>
+      ), { duration: 5000, id: `delete-section-${id}` });
     }
+
+    setIsConfirmModalOpen(false);
+    setItemToDelete(null);
   };
+
 
   return (
-    <div className={manageStyles.pageContainer}>
-      <header className={manageStyles.header}>
-        <button onClick={() => router.push('/admin/dashboard')} className={manageStyles.backButton}>← Back</button>
-        <h1>Manage Classes & Sections</h1>
-      </header>
+    <>
+      <div className={styles.pageContainer}>
+        <header className={styles.header}>
+          <button onClick={() => router.push('/admin/dashboard')} className={styles.backButton}>← Back</button>
+          <h1>Manage Classes & Sections</h1>
+        </header>
 
-      <main className={manageStyles.contentGrid}>
-        <div className={manageStyles.card}>
-          <h2>Classes</h2>
-          <form onSubmit={handleAddClass} className={manageStyles.form}>
-            <input type="text" placeholder="Add New Class" value={newClassName} onChange={(e) => setNewClassName(e.target.value)} className={manageStyles.input} />
-            <button type="submit" className={manageStyles.addButton}><FiPlus /></button>
-          </form>
-          {loading ? <p>Loading...</p> : (
-            <ul className={manageStyles.list}>
-              {classes.map((cls) => (
-                <li key={cls.id} className={`${manageStyles.listItem} ${selectedClass?.id === cls.id ? manageStyles.active : ''}`} onClick={() => handleClassSelect(cls)}>
-                  <span>{cls.name}</span>
-                   <button onClick={(e) => { e.stopPropagation(); handleDeleteClass(cls.id); }} className={manageStyles.deleteButton}><FiTrash2 /></button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <main className={styles.content}>
+          <div className={styles.card} style={{ marginBottom: '20px' }}>
+            <h2>Select Academic Year</h2>
+            <div className={styles.selectWrapper}>
+              <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className={styles.select}>
+                <option value="" disabled>-- Select a Year --</option>
+                {academicYears.map(y => <option key={y.academic_year} value={y.academic_year}>{y.academic_year}</option>)}
+              </select>
+              <FiChevronDown />
+            </div>
+          </div>
 
-        <div className={manageStyles.card}>
-          {selectedClass ? (
-            <>
-              <h2>Sections for {selectedClass.name}</h2>
-              <form onSubmit={handleAddSection} className={manageStyles.form}>
-                <input type="text" placeholder="Add New Section" value={newSectionName} onChange={(e) => setNewSectionName(e.target.value)} className={manageStyles.input} />
-                <button type="submit" className={manageStyles.addButton}><FiPlus /></button>
-              </form>
-              <ul className={manageStyles.list}>
-                {sections.map((sec) => (
-                  <li key={sec.id} className={manageStyles.listItem}>
-                    <span>{sec.name}</span>
-                    <button onClick={() => handleDeleteSection(sec.id)} className={manageStyles.deleteButton}><FiTrash2 /></button>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <div className={manageStyles.placeholder}>
-              <p>Select a class from the left to manage its sections.</p>
+          {selectedYear && (
+            <div className={styles.contentGrid}>
+              <div className={styles.card}>
+                <h2>Classes for {selectedYear}</h2>
+                <form onSubmit={handleAddClass} className={styles.form}>
+                  <input type="text" placeholder="Add New Class" value={newClassName} onChange={(e) => setNewClassName(e.target.value)} className={styles.input} />
+                  <button type="submit" className={styles.addButton}><FiPlus /></button>
+                </form>
+                <ul className={styles.list}>
+                  {classes.map((cls) => (
+                    <li key={cls.id} className={`${styles.listItem} ${selectedClass?.id === cls.id ? styles.active : ''}`} onClick={() => handleClassSelect(cls)}>
+                      <span>{cls.name}</span>
+                      {/* ✅ ধাপ ৩: onClick এ এখন openDeleteModal কল করা হচ্ছে */}
+                      <button onClick={(e) => { e.stopPropagation(); openDeleteModal(cls.id, 'class'); }} className={styles.deleteButton}><FiTrash2 /></button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className={styles.card}>
+                {selectedClass ? (
+                  <>
+                    <h2>Sections for {selectedClass.name}</h2>
+                    <form onSubmit={handleAddSection} className={styles.form}>
+                      <input type="text" placeholder="Add New Section" value={newSectionName} onChange={(e) => setNewSectionName(e.target.value)} className={styles.input} />
+                      <button type="submit" className={styles.addButton}><FiPlus /></button>
+                    </form>
+                    <ul className={styles.list}>
+                      {sections.map((sec) => (
+                        <li key={sec.id} className={styles.listItem}>
+                          <span>{sec.name}</span>
+                          <button onClick={() => openDeleteModal(sec.id, 'section')} className={styles.deleteButton}><FiTrash2 /></button>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <div className={styles.placeholder}>
+                    <p>Select a class from the left to manage its sections.</p>
+                  </div>
+                )}
+              </div>
             </div>
           )}
-        </div>
-      </main>
-      {message && <div className={manageStyles.message}>{message}</div>}
-    </div>
+        </main>
+      </div>
+
+      {/* ✅ ধাপ ৪: Modal কম্পোনেন্টটি এখানে যোগ করা হয়েছে */}
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        title="Confirm Deletion"
+        message={`Are you sure you want to delete this ${itemToDelete?.type}? This action might be irreversible.`}
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setIsConfirmModalOpen(false)}
+      />
+    </>
   );
 }

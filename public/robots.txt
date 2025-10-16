@@ -1,0 +1,15 @@
+User-agent: *
+# ✅ শুধুমাত্র হোমপেজ ইনডেক্স হবে
+Allow: /
+
+# 🚫 নিচের ডিরেক্টরি বা রুটগুলো সার্চ বটদের থেকে লুকানো থাকবে
+Disallow: /admin/
+Disallow: /teacher/
+Disallow: /student/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /login/
+Disallow: /signup/
+
+# 🔗 Sitemap এর লোকেশন
+Sitemap: https://abcschool-one.vercel.app/sitemap.xml
