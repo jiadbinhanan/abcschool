@@ -98,7 +98,7 @@ export default function ManageSubjects() {
 
     toast.custom((t) => (
       <div style={{ background: '#333', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-        <span>Subject "{subjectToDelete.name}" deleted.</span>
+<span>Subject &quot;{subjectToDelete.name}&quot; deleted.</span>
         <button style={{ background: '#555', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '5px' }}
           onClick={() => {
             clearTimeout(timeout);

@@ -1,6 +1,6 @@
 // pages/admin/manage-students/promote-students.tsx
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../../../lib/supabaseClient';
 import { useRouter } from 'next/router';
 import styles from '../../../styles/ManageStudents.module.css';
@@ -74,7 +74,7 @@ export default function PromoteStudents({ initialAcademicYears, initialAllClasse
   }, [sourceClass, destinationClass]);
 
 
-  const fetchAndFormatStudents = async (queryBuilder: any) => {
+  const fetchAndFormatStudents = useCallback(async (queryBuilder: any) => {
     setIsLoading(true);
     const { data, error } = await queryBuilder;
 
@@ -96,7 +96,7 @@ export default function PromoteStudents({ initialAcademicYears, initialAllClasse
       setSelectedStudents(new Set());
     }
     setIsLoading(false);
-  };
+}, [promotedStudentIds]);
 
   useEffect(() => {
     if (searchMode === 'class' && sourceYear && sourceClass && sourceSection) {
@@ -105,7 +105,7 @@ export default function PromoteStudents({ initialAcademicYears, initialAllClasse
     } else if (searchMode !== 'id') { // Prevent clearing when switching to ID search
       setStudentsInTable([]);
     }
-  }, [sourceYear, sourceClass, sourceSection, searchMode]);
+}, [sourceYear, sourceClass, sourceSection, searchMode, fetchAndFormatStudents]);
 
   const handleStudentIdSearch = async () => {
       if (!studentIdSearch.trim()) return;
@@ -196,7 +196,7 @@ export default function PromoteStudents({ initialAcademicYears, initialAllClasse
                 <h4>Select Students to Promote</h4>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>
-                        <thead><tr><th>Select & Roll</th><th>Name & ID</th><th>Current Enrollment</th><th>Father's Name</th><th>New Roll</th></tr></thead>
+<thead><tr><th>Select & Roll</th><th>Name & ID</th><th>Current Enrollment</th><th>Father&apos;s Name</th><th>New Roll</th></tr></thead>
                         <tbody>
                             {studentsInTable.map(student => (
                                 <tr key={student.student_id}>

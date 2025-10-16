@@ -21,7 +21,6 @@ export default function ManageClasses() {
   const [academicYears, setAcademicYears] = useState<AcademicYear[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>('');
   
-  // ✅ Modal এবং Undo লজিকের জন্য State
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<{ id: number; type: 'class' | 'section' } | null>(null);
 
@@ -80,24 +79,20 @@ export default function ManageClasses() {
     }
   };
 
-  // ✅ ধাপ ১: Modal খোলার জন্য নতুন ফাংশন
   const openDeleteModal = (id: number, type: 'class' | 'section') => {
     setItemToDelete({ id, type });
     setIsConfirmModalOpen(true);
   };
 
-  // ✅ ধাপ ২: Modal থেকে Confirm করার পর Undo লজিকসহ ডিলিট ফাংশন
   const handleConfirmDelete = () => {
     if (!itemToDelete) return;
 
     const { id, type } = itemToDelete;
     
-    // ক্লাস ডিলিট করার লজিক
     if (type === 'class') {
       const classToDelete = classes.find(c => c.id === id);
       if (!classToDelete) return;
 
-      // Optimistic UI update
       setClasses(prev => prev.filter(c => c.id !== id));
       if (selectedClass?.id === id) {
         setSelectedClass(null);
@@ -111,7 +106,8 @@ export default function ManageClasses() {
 
       toast.custom((t) => (
         <div style={{ background: '#333', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <span>Class "{classToDelete.name}" deleted.</span>
+          {/* ✅ সংশোধন: এখানে ডাবল কোটেশন (" ") পরিবর্তন করে &quot; ব্যবহার করা হয়েছে */}
+          <span>Class &quot;{classToDelete.name}&quot; deleted.</span>
           <button style={{ background: '#555', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '5px' }}
             onClick={() => {
               clearTimeout(timeout);
@@ -124,12 +120,10 @@ export default function ManageClasses() {
       ), { duration: 5000, id: `delete-class-${id}` });
     }
     
-    // সেকশন ডিলিট করার লজিক
     if (type === 'section') {
       const sectionToDelete = sections.find(s => s.id === id);
       if (!sectionToDelete) return;
       
-      // Optimistic UI update
       setSections(prev => prev.filter(s => s.id !== id));
       
       const timeout = setTimeout(async () => {
@@ -139,7 +133,8 @@ export default function ManageClasses() {
 
       toast.custom((t) => (
         <div style={{ background: '#333', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <span>Section "{sectionToDelete.name}" deleted.</span>
+          {/* ✅ সংশোধন: এখানেও ডাবল কোটেশন (" ") পরিবর্তন করে &quot; ব্যবহার করা হয়েছে */}
+          <span>Section &quot;{sectionToDelete.name}&quot; deleted.</span>
           <button style={{ background: '#555', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '5px' }}
             onClick={() => {
               clearTimeout(timeout);
@@ -155,7 +150,6 @@ export default function ManageClasses() {
     setIsConfirmModalOpen(false);
     setItemToDelete(null);
   };
-
 
   return (
     <>
@@ -189,7 +183,6 @@ export default function ManageClasses() {
                   {classes.map((cls) => (
                     <li key={cls.id} className={`${styles.listItem} ${selectedClass?.id === cls.id ? styles.active : ''}`} onClick={() => handleClassSelect(cls)}>
                       <span>{cls.name}</span>
-                      {/* ✅ ধাপ ৩: onClick এ এখন openDeleteModal কল করা হচ্ছে */}
                       <button onClick={(e) => { e.stopPropagation(); openDeleteModal(cls.id, 'class'); }} className={styles.deleteButton}><FiTrash2 /></button>
                     </li>
                   ))}
@@ -224,7 +217,6 @@ export default function ManageClasses() {
         </main>
       </div>
 
-      {/* ✅ ধাপ ৪: Modal কম্পোনেন্টটি এখানে যোগ করা হয়েছে */}
       <ConfirmationModal
         isOpen={isConfirmModalOpen}
         title="Confirm Deletion"

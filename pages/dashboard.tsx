@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
 import { supabase } from '../lib/supabaseClient';
 import type { GetServerSidePropsContext } from 'next';
-
+import Image from 'next/image';
 import styles from '../styles/Dashboard.module.css';
 import { FiGrid, FiUpload, FiUser, FiUsers, FiLogOut, FiMenu, FiX, FiEye, FiDownload } from 'react-icons/fi';
 
@@ -142,7 +142,10 @@ export default function Dashboard({ initialCanManageStudents, initialAcademicYea
         <div className={styles.dashboardHeaderArea}>
           <div className={styles.topBar}>
             <button className={styles.hamburgerMenu} onClick={() => setSidebarOpen(true)}><FiMenu /></button>
-            <div className={styles.academyCard}><img src="/logo.jpg" alt="A B C Academy Logo" /><h2>A B C Academy</h2></div>
+<div className={styles.academyCard}>
+  <Image src="/logo.jpg" alt="A B C Academy Logo" width={40} height={40} />
+  <h2>A B C Academy</h2>
+</div>
           </div>
           <div className={styles.welcomeMessageContainer}><div className={styles.smokeEffect}></div><div className={styles.welcomeText}>Welcome, Teacher</div></div>
           <h1 className={styles.pageTitle}>Dashboard</h1>
@@ -187,7 +190,7 @@ export default function Dashboard({ initialCanManageStudents, initialAcademicYea
               <div className={styles.exportButtons}><button onClick={handleExportPDF} className={styles.exportButton}><FiDownload /> PDF</button><button onClick={handleExportExcel} className={styles.exportButton}><FiDownload /> Excel</button></div>
             </div>
             <table className={styles.studentTable}>
-              <thead><tr><th>Roll Number</th><th>Name</th><th>Student ID</th><th>Father's Name</th></tr></thead>
+<thead><tr><th>Roll Number</th><th>Name</th><th>Student ID</th><th>Father&apos;s Name</th></tr></thead>
               <tbody>
                 {students.map(student => (
                   <tr key={student.students.student_unique_id}>

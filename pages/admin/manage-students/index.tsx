@@ -37,8 +37,8 @@ function TeacherPermissionToggle() {
     <div className={permissionStyles.permissionContainer}>
       <h3 className={permissionStyles.permissionHeader}>Teacher Access Control</h3>
       <p className={permissionStyles.permissionSubheader}>
-        Use this master switch to grant or revoke "Manage Students" access for ALL teachers.
-      </p>
+  Use this master switch to grant or revoke &quot;Manage Students&quot; access for ALL teachers.
+</p>
       <div className={permissionStyles.teacherRow}>
         <span className={permissionStyles.teacherName}>Allow All Teachers to Manage Students</span>
         <div className={permissionStyles.permissionAction}>

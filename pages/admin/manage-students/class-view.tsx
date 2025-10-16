@@ -177,7 +177,7 @@ export default function ClassViewManageStudents({ initialAcademicYears }: PagePr
 
     toast.custom((t) => (
       <div className={styles.undoToast}>
-        <span>"{enrollmentToDelete.students.name}" deleted.</span>
+<span>&quot;{enrollmentToDelete.students.name}&quot; deleted.</span>
         <button
           className={styles.undoButton}
           onClick={() => {
@@ -333,7 +333,7 @@ export default function ClassViewManageStudents({ initialAcademicYears }: PagePr
                         <table className={styles.table}>
                           <thead>
                             <tr>
-                              <th>Roll</th><th>Name</th><th>Student ID</th><th>Father's Name</th><th>Date of Birth</th><th>Actions</th>
+                              <th>Roll</th><th>Name</th><th>Student ID</th><th>Father&apos;s Name</th><th>Date of Birth</th><th>Actions</th>
                             </tr>
                           </thead>
                           <tbody>

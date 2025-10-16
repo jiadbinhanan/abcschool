@@ -197,7 +197,8 @@ export default function ManageNotices() {
 
     toast.custom((t) => (
       <div style={{ background: '#333', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-        <span>Notice "{noticeToDelete.title}" deleted.</span>
+        {/* ✅ সংশোধন: এখানে ডাবল কোটেশন (" ") পরিবর্তন করে &quot; ব্যবহার করা হয়েছে */}
+        <span>Notice &quot;{noticeToDelete.title}&quot; deleted.</span>
         <button
           style={{ background: '#555', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '5px' }}
           onClick={() => {
@@ -257,7 +258,6 @@ export default function ManageNotices() {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           padding: 20px;
         }
-        /* ✅ পরিবর্তন: Header স্টাইল আপডেট করা হয়েছে */
         .header {
           background-color: transparent;
           display: flex;
@@ -273,7 +273,6 @@ export default function ManageNotices() {
           color: #263238;
           font-weight: 600;
         }
-        /* ✅ নতুন: Back Button স্টাইল */
         .backButton {
           background: rgba(255, 255, 255, 0.5);
           border: 1px solid #ddd;
@@ -344,7 +343,6 @@ export default function ManageNotices() {
         .downloadButton:hover { background-color: #43a047; transform: translateY(-1px); }
       `}</style>
       <div className="pageContainer">
-        {/* ✅ পরিবর্তন: Header আপডেট করা হয়েছে */}
         <header className="header">
           <Link href="/admin/dashboard" legacyBehavior>
                 <a className="backButton">← Back to Dashboard</a>

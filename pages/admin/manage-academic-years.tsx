@@ -20,7 +20,6 @@ export default function ManageAcademicYears() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // ✅ Modal এবং Undo লজিকের জন্য State
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
 
@@ -55,13 +54,11 @@ export default function ManageAcademicYears() {
     }
   };
   
-  // ✅ ধাপ ১: Modal খোলার জন্য ফাংশন
   const openDeleteModal = (id: number) => {
     setItemToDelete(id);
     setIsConfirmModalOpen(true);
   };
 
-  // ✅ ধাপ ২: Modal থেকে Confirm করার পর Undo লজিকসহ ডিলিট ফাংশন
   const handleConfirmDelete = () => {
     if (!itemToDelete) return;
     const yearId = itemToDelete;
@@ -78,7 +75,8 @@ export default function ManageAcademicYears() {
 
     toast.custom((t) => (
       <div style={{ background: '#333', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-        <span>Year "{yearToDelete.year_name}" deleted.</span>
+        {/* এখানে ডাবল কোটেশন (" ") পরিবর্তন করে &quot; ব্যবহার করা হয়েছে */}
+        <span>Year &quot;{yearToDelete.year_name}&quot; deleted.</span>
         <button style={{ background: '#555', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: '5px' }}
           onClick={() => {
             clearTimeout(timeout);
@@ -94,17 +92,16 @@ export default function ManageAcademicYears() {
   };
 
   const handleSetActive = async (yearId: number) => {
-    // একটি লোডিং toast দেখানো যেতে পারে
     const toastId = toast.loading('Setting active year...');
     const { error } = await supabase.rpc('set_active_year', { year_id: yearId });
     
-    toast.dismiss(toastId); // লোডিং toast বন্ধ করা
+    toast.dismiss(toastId);
 
     if (error) {
       toast.error(`Error setting active year: ${error.message}`);
     } else {
       toast.success('Active year has been updated.');
-      fetchYears(); // তালিকা রিফ্রেশ করা
+      fetchYears();
     }
   };
 
@@ -146,7 +143,6 @@ export default function ManageAcademicYears() {
                            <FiCheckCircle /> Set Active
                          </button>
                       )}
-                      {/* ✅ ধাপ ৩: onClick এ এখন openDeleteModal কল করা হচ্ছে */}
                       <button onClick={() => openDeleteModal(year.id)} className={styles.deleteButton}><FiTrash2 /></button>
                     </div>
                   </li>
@@ -157,7 +153,6 @@ export default function ManageAcademicYears() {
         </main>
       </div>
 
-      {/* ✅ ধাপ ৪: Modal কম্পোনেন্টটি এখানে যোগ করা হয়েছে */}
       <ConfirmationModal
           isOpen={isConfirmModalOpen}
           title="Confirm Deletion"
